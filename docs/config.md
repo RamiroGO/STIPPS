@@ -1,0 +1,1 @@
+npm install react mysql nodemon express
