@@ -1,40 +1,41 @@
-# STIPPS
-## Página para ofrecer el servicio de cursos varios.
+# Bienvenidos
+## Nombre del Proyecto: STIPPS
+## Descripción: Página para ofrecer el servicio de cursos varios.
 
-# Stacks
+# Stacks (Tecnologías Usadas):
 ## Visual Studio Code
 ### Thunder Client
 ### Ajax
 ## MySQL
 ### WorkBench
 
-# Árbol DataBase
-## personas
-### - Id_persona
-### - Nombre
-### - Correo
+# DataBase
+## Arbol de Contenido de la Database:
+Areas - Cursos
+### * Ambiental
+### - Manejos De residuos orgánicos
+### - Manejo De aguas residuales
+### - Extracion de agua con bombas de ariete
+### * Juridico
+### - Penal
+### - Civil
+### - Técnico
+### * Programación
+### - Principios de computacion
+### - Lenguajes de programacion
+### * Social
+### - Programas para La Familia
 
-## Areas
-### - ambiente
-### - juridico
-## cursos
-### Id_curso
-#### - ambiental
-##### - manejos de residuos orgánicos
-##### - manejo de aguas residuales
-#### - juridico
-#### - programación
-##### - principios de computacion
-##### - lenguajes de programacion
-#### - social
-##### - programas para la familia
-#### - tecnologia
-### - extracion de agua con bombas de ariete
-
-## profesor
-### -Id_Profesional
-
-## usuario
-### -Id_Usuario
-
-Nombre de Bas de Datos
+## Estructura de Datos
+Tabla - Campos
+#### * curso
+#### - id
+#### - nombre
+#### * docente
+#### - id
+#### - nombre
+#### - correo
+#### * persona
+#### - id
+#### - nombre
+#### - correo

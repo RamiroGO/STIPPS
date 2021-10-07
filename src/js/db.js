@@ -1,10 +1,12 @@
 function get(){
+    let json_data = [
+      {
+        id: 1,
+        nombre: "Ambiente",
+        descripcion: "Describiendo"
+      },
+    ];
     return {
-        [
-            {
-            "Nombre": "Ambiente"
-                
-            }
-        ]
+        json_data
     }
 }
