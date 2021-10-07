@@ -1,6 +1,5 @@
 # STIPPS
-## 
-Página para ofrecer el servicio de cursos varios.
+## Página para ofrecer el servicio de cursos varios.
 
 # Stacks
 ## Visual Studio Code

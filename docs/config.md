@@ -1,1 +1,2 @@
-npm install react mysql nodemon express
+# Ejecutar html-consulta
+start "./src/view/html/consulta.html"
