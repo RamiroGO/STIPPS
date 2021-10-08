@@ -1,80 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <link rel="stylesheet" type="text/css" media="screen"
-            href="../css/consulta.css">
-        <title>STIPPS</title>
-    </head>
-    <body>
-        <h2><i>Módulo de Consulta</i></h2>
-        <form id="formConsulta">
-            <div id="divEntradaDato">
-                <table id="tblEntradaDato">
-                    <tbody id="tbEntradaDato">
-                        <td>
-                            AREA
-                        </td>
-                        <td>
-                            <select name="nameArea">
-                                <option>--Seleccionar--</option>
-                                <option id="optID_AREA">Aqui llega los datos de
-                                    la base de datos</option>
-                            </select>
-                        </td>
-                        <tr>
-                            <td>
-                                CURSOS
-                            </td>
-                            <td>
-                                <select name="nameCurso">
-                                    <option>--Seleccionar--</option>
-                                    <option id="optID_CURSOS">Aqui llega los
-                                        datos de la base de datos</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <tr>
-                                <td>
-                                    DOCENTE
-                                </td>
-                                <td>
-                                    <label id="docente"></label>
-                                </td>
-                            </tr>
-                            <td colspan="2">
-                                <input type="submit" value="Agregar"
-                                    id="btnAgregar" name="nameBtnAgregar">
-                                <input type="submit" value="Modificar"
-                                    id="btnModificar" name="nameBtnModificar">
-                                <input type="submit" value="Eliminar"
-                                    id="btnEliminar" name="nameBtnEliminar">
-                                <input type="submit" value="Consultar"
-                                    id="btnConsultar" name="nameBtnConsultar">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <br>
-        </form>
-        <div id="divSalidaDato">
-            <table id="tblSalidaDato" border="3">
-                <thead id="thSalidaDato">
-                    <tr>
-                        <td>AREA</td>
-                        <td>CURSO</td>
-                        <td>DOCENTE</td>
-                    </tr>
-                </thead>
-                <tbody id="tbSalidaDato">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="../css/consulta.css"
+    />
+    <title>STIPPS</title>
+  </head>
 
-                </tbody>
-            </table>
-        </div>
-        <script src="../js/consulta.js"></script>
-    </body>
+  <body>
+    <h2><i>Módulo de Consulta</i></h2>
+    <form id="formConsulta">
+      <table id="tblEntradaDato">
+        <td>AREA</td>
+        <td>
+          <select id="selArea">
+            <option>--Seleccionar--</option>
+            <option id="optID_AREA">
+              Aqui llega los datos de la base de datos
+            </option>
+          </select>
+        </td>
+        <tr>
+          <td>CURSOS</td>
+          <td>
+            <select id="selCurso">
+              <option>--Seleccionar--</option>
+              <option id="optID_CURSOS">
+                Aqui llega los datos de la base de datos
+              </option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <br />
+      <input type="submit" onclick= "addRow(event);" value="Agregar" />
+      <input type="submit" onclick= "updRow(event);" value="Modificar" />
+      <input type="submit" onclick= "delRow(event);" value="Eliminar" />
+      <input type="submit" onclick= "getRow(event);" value="Consultar" />
+    </form>
+    <br />
+    <div id="divSalidaDato" class="salidaTabla">
+      <table id="tblSalidaDato" class="output">
+        <thead>
+          <tr>
+            <td>AREA</td>
+            <td>CURSO</td>
+            <td>DOCENTE</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="../js/consulta.js"></script>
+  </body>
 </html>

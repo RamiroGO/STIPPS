@@ -19,13 +19,33 @@ document.addEventListener("DOMContentLoaded", function (event) {
 let form_user = document.getElementById("formConsulta");
 
 // Activamos los eventos de presionar botones.
-form_user.addEventListener("submit", function (event) {
+// form_user.addEventListener("submit", function (event) {
+//   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
+//   event.preventDefault();
+
+//   // Almacenar la información del formulario en una variable.
+//   const form_data = new FormData(form_user);
+
+//   //Convertir la información del formulario en un JSon
+//   const json_data = FormData2Obj(form_data);
+
+//   // Guarda la información del formulario en el LocalStorage
+//   saveObjData("flujosDataLocalStorage", json_data);
+
+//   // Inserta la información en la tabla
+//   show_newRowInTable(json_data, "tblSalidaDato");
+
+//   // Reiniciar los valores de las casillas del formulario
+//   form_user.reset();
+// });
+
+function addRow(event) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
-  console.log(document.getElementById("btnAgregar"));
+
   // Almacenar la información del formulario en una variable.
-  
   const form_data = new FormData(form_user);
+
   //Convertir la información del formulario en un JSon
   const json_data = FormData2Obj(form_data);
 
@@ -33,11 +53,30 @@ form_user.addEventListener("submit", function (event) {
   saveObjData("flujosDataLocalStorage", json_data);
 
   // Inserta la información en la tabla
-  show_newRowInTable(json_data, "tblEntradaDato");
+  show_newRowInTable(json_data, "tblSalidaDato");
 
   // Reiniciar los valores de las casillas del formulario
   form_user.reset();
-});
+
+  console.log("Curso Añadido");
+}
+function updRow(event) {
+  // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
+  event.preventDefault();
+
+  console.log("Curso Editado");
+}
+function delRow(event) {
+  // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
+  event.preventDefault();
+
+  console.log("Curso Eliminado");
+}
+function getRow(event) {
+  // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
+  event.preventDefault();
+  console.log("Curso Consultado");
+}
 
 // Guarda la información
 function saveObjData(key_data, JSONData) {
@@ -57,11 +96,11 @@ function saveObjData(key_data, JSONData) {
   localStorage.setItem(key_data, stringArrayJson);
 }
 
-function FormData2Obj(form_data) { 
+function FormData2Obj(form_data) {
   return {
     areaFormUser: form_data.get("nameArea"),
     cursoFormUser: form_data.get("nameCurso"),
-    emailFormUser: "Ramiro"
+    emailFormUser: "Ramiro",
   };
 }
 
