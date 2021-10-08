@@ -1,6 +1,11 @@
 # Ejecutar html-consulta
 ## 
 start "./src/view/html/consulta.html"
+presionando "Go Live" en la barra inferior de Visual Studio Code
+
+# Abrir Panel del Desarrollador Web
+Ctrl + Shift + I
+- Consola
 
 # Cargar y Guardar en Repositorios Git y GitHub
 ## 1. Cargar modificaciones de otros colaboradores:
