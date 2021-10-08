@@ -57,10 +57,9 @@ function saveObjData(key_data, JSONData) {
 
 function FormData2Obj(form_data) {
   return {
-    typeTransaction: form_data.get("nameTypeTransaction"),
-    descriptionTransaction: form_data.get("nameDescriptionTransaction"),
-    amountTransaction: form_data.get("nameAmountTransaction"),
-    categoryTransaction: form_data.get("nameCategoryTransaction"),
+    areaFormUser: form_data.get("nameArea"),
+    cursoFormUser: form_data.get("nameCurso"),
+    emailFormUser: form_data.get("nameCorreo")
   };
 }
 
@@ -71,14 +70,11 @@ function show_newRowInTable(diccForm, idTable) {
 
   let newCell;
   newCell = newRowRef.insertCell(0);
-  newCell.textContent = diccForm["typeTransaction"];
+  newCell.textContent = diccForm["areaFormUser"];
 
   newCell = newRowRef.insertCell(1);
-  newCell.textContent = diccForm["descriptionTransaction"];
+  newCell.textContent = diccForm["cursoFormUser"];
 
   newCell = newRowRef.insertCell(2);
-  newCell.textContent = diccForm["amountTransaction"];
-
-  newCell = newRowRef.insertCell(3);
-  newCell.textContent = diccForm["categoryTransaction"];
+  newCell.textContent = diccForm["emailFormUser"];
 }

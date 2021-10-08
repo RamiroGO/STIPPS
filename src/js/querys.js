@@ -1,25 +1,25 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("../database/conexion");
-const app = express();
+const query_server = express();
 
 // Settings
 
 //Middlewares
 // Acciones que se ejecutan antes de que se exploren las rutas
-app.use(express.urlencoded({ extended: false }));
+query_server.use(express.urlencoded({ extended: false }));
 // Convertir de JSON a Variables:
-app.use(express.json());
+query_server.use(express.json());
 // Guardamos el puerto como una variable
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+query_server.use(cors());
 
 // Servidor API REST
 // Routers: Enrutamiento según la petición hecha en la página Web.
 // PENDIENTE: Mover todas las peticiones al archivo:
-// app.use(require('./routes/movimiento'));
-app.get("/all", (req, res) => {
+// query_server.use(require('./routes/movimiento'));
+query_server.get("/all", (req, res) => {
   const consulta_sql = "SELECT * FROM flujo";
   db.query(consulta_sql, (err, data) => {
     if (err) return err;
@@ -27,7 +27,7 @@ app.get("/all", (req, res) => {
   });
 });
 
-app.post('', (req, res) => {
+query_server.post('', (req, res) => {
   const values = Object.values(req.body);
   console.log(values);
 
@@ -51,7 +51,7 @@ app.post('', (req, res) => {
   });
 });
 
-app.get("/:id", (req, res) => {
+query_server.get("/:id", (req, res) => {
   console.log(req.params.id);
   const values = req.params.id;
   const consulta_sql = "SELECT * FROM flujo WHERE idflujo = ?;";
@@ -66,7 +66,7 @@ app.get("/:id", (req, res) => {
   });
 });
 
-app.put("/:id", (req, res) => {
+query_server.put("/:id", (req, res) => {
   const values = Object.values(req.body).concat(parseInt(req.params.id));
   console.log(values);
 
@@ -90,7 +90,7 @@ app.put("/:id", (req, res) => {
   });
 });
 
-app.delete("/:id", (req, res) => {
+query_server.delete("/:id", (req, res) => {
   console.log(req.params.id);
   const values = parseInt(req.params.id);
   const consulta_sql = "DELETE FROM flujo WHERE idflujo = ?;";
@@ -104,8 +104,8 @@ app.delete("/:id", (req, res) => {
     }
   });
 });
-app.listen(PORT, () => {
+query_server.listen(PORT, () => {
   console.log("Servidor on Port: " + PORT);
 });
 
-module.exports = app;
+module.exports = query_server;
