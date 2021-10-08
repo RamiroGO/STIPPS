@@ -1,40 +1,42 @@
 // let database_1 = require("../../database/conexion");
-import app from "../../js/querys.js";
-
-let form_user = document.getElementById("formConsulta");
-
-// Activamos los eventos de presionar botones.
-form_user.addEventListener("btnAgregar", function (event) {
-  // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
-  event.preventDefault();
-
-  // Almacenar la información del formulario en una variable
-  const form_data = new FormData(form_user);
-  //Convertir la información del formulario en un JSon
-  const json_data = FormData2Obj(form_data);
-
-  // Guarda la información del formulario en el LocalStorage
-  saveObjData("transactionData", json_data);
-
-  // Inserta la información en la tabla
-  show_newRowInTable(json_data, "tableTransaction");
-
-  // Reiniciar los valores de las casillas del formulario
-  form_user.reset();
-});
+// let query_server = require("../../js/query_server.js");
 
 // Instrucción que se ejecuta después de cargar la página.
 document.addEventListener("DOMContentLoaded", function (event) {
   // Revisar el localStorage
-  let stringLocalStorage = localStorage.getItem("transactionData");
+  let stringLocalStorage = localStorage.getItem("flujosDataLocalStorage");
 
   // Convertir texto a JSON
   let arrayJson = JSON.parse(stringLocalStorage) || [];
 
   // Recorrer el arreglo y visualizar
   arrayJson.forEach((row) => {
-    show_newRowInTable(row, "tableTransaction");
+    show_newRowInTable(row, "tblSalidaDato");
   });
+});
+
+// Guardamos el Formulario en una variable
+let form_user = document.getElementById("formConsulta");
+
+// Activamos los eventos de presionar botones.
+form_user.addEventListener("submit", function (event) {
+  // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
+  event.preventDefault();
+  console.log(document.getElementById("btnAgregar"));
+  // Almacenar la información del formulario en una variable.
+  
+  const form_data = new FormData(form_user);
+  //Convertir la información del formulario en un JSon
+  const json_data = FormData2Obj(form_data);
+
+  // Guarda la información del formulario en el LocalStorage
+  saveObjData("flujosDataLocalStorage", json_data);
+
+  // Inserta la información en la tabla
+  show_newRowInTable(json_data, "tblEntradaDato");
+
+  // Reiniciar los valores de las casillas del formulario
+  form_user.reset();
 });
 
 // Guarda la información
@@ -55,30 +57,26 @@ function saveObjData(key_data, JSONData) {
   localStorage.setItem(key_data, stringArrayJson);
 }
 
-function FormData2Obj(form_data) {
+function FormData2Obj(form_data) { 
   return {
-    typeTransaction: form_data.get("nameTypeTransaction"),
-    descriptionTransaction: form_data.get("nameDescriptionTransaction"),
-    amountTransaction: form_data.get("nameAmountTransaction"),
-    categoryTransaction: form_data.get("nameCategoryTransaction"),
+    areaFormUser: form_data.get("nameArea"),
+    cursoFormUser: form_data.get("nameCurso"),
+    emailFormUser: "Ramiro"
   };
 }
 
 function show_newRowInTable(diccForm, idTable) {
-  console.log(diccForm);
+  // console.log(diccForm);
   let tableRef = document.getElementById(idTable);
   let newRowRef = tableRef.insertRow(-1);
 
   let newCell;
   newCell = newRowRef.insertCell(0);
-  newCell.textContent = diccForm["typeTransaction"];
+  newCell.textContent = diccForm["areaFormUser"];
 
   newCell = newRowRef.insertCell(1);
-  newCell.textContent = diccForm["descriptionTransaction"];
+  newCell.textContent = diccForm["cursoFormUser"];
 
   newCell = newRowRef.insertCell(2);
-  newCell.textContent = diccForm["amountTransaction"];
-
-  newCell = newRowRef.insertCell(3);
-  newCell.textContent = diccForm["categoryTransaction"];
+  newCell.textContent = diccForm["emailFormUser"];
 }

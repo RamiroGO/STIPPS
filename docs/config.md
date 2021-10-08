@@ -23,3 +23,14 @@ git push
 ## 2.- Buscar el repositorio a trabajar: Botón Grande de la parte superior izquierda con una flechita
 ## 3.- Escribir el Commit en el panel de la parte inferior izquierda.
 ## 4.- Presionar el botón de "Push" que aparecerá en la parte superior central.
+
+# Instalaciones
+## Node
+### Comenzar con node para crear un package.json
+npm init -y
+
+### Instalar Dependencias del Proyecto:
+npm install mysql express cors
+
+### Instalar Dependencias de Desarrollo: Para evitar el tener que reiniciar el servidor por cada modificación.
+npm install nodemon -D

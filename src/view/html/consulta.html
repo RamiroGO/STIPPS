@@ -18,7 +18,7 @@
                             AREA
                         </td>
                         <td>
-                            <select id="selID_AREA.">
+                            <select name="nameArea">
                                 <option>--Seleccionar--</option>
                                 <option id="optID_AREA">Aqui llega los datos de
                                     la base de datos</option>
@@ -29,7 +29,7 @@
                                 CURSOS
                             </td>
                             <td>
-                                <select id="selID_CURSOS">
+                                <select name="nameCurso">
                                     <option>--Seleccionar--</option>
                                     <option id="optID_CURSOS">Aqui llega los
                                         datos de la base de datos</option>
@@ -39,22 +39,21 @@
                         <tr>
                             <tr>
                                 <td>
-                                    CORREO USUARIO
+                                    DOCENTE
                                 </td>
                                 <td>
-                                    <input type="text" value="" id="txtCorreo
-                                        Usuario" name="txtCorreo usuario">
+                                    <label id="docente"></label>
                                 </td>
                             </tr>
                             <td colspan="2">
-                                <input type="button" value="Agregar"
-                                    id="btnAgregar" name="btnAgregar">
-                                <input type="button" value="Modificar"
-                                    id="btnModificar" name="btnModificar">
-                                <input type="button" value="Eliminar"
-                                    id="btnEliminar" name="btnEliminar">
-                                <input type="button" value="Consultar"
-                                    id="btnConsultar" name="btnConsultar">
+                                <input type="submit" value="Agregar"
+                                    id="btnAgregar" name="nameBtnAgregar">
+                                <input type="submit" value="Modificar"
+                                    id="btnModificar" name="nameBtnModificar">
+                                <input type="submit" value="Eliminar"
+                                    id="btnEliminar" name="nameBtnEliminar">
+                                <input type="submit" value="Consultar"
+                                    id="btnConsultar" name="nameBtnConsultar">
                             </td>
                         </tr>
                     </tbody>
@@ -66,10 +65,9 @@
             <table id="tblSalidaDato" border="3">
                 <thead id="thSalidaDato">
                     <tr>
-                        <td>Profesional Encargado</td>
-                        <td>Área </td>
-                        <td>Descripción</td>
-                        <td>Curso</td>
+                        <td>AREA</td>
+                        <td>CURSO</td>
+                        <td>DOCENTE</td>
                     </tr>
                 </thead>
                 <tbody id="tbSalidaDato">
