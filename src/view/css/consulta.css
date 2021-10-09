@@ -10,6 +10,6 @@ thead tr td {
   border: 2px solid red;
 }
 
-td {
+tbody tr td {
   border: 1px solid blue;
 }

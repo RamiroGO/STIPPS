@@ -60,6 +60,7 @@ function addRow(event) {
 
   console.log("Curso Añadido");
 }
+
 function updRow(event) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
@@ -106,16 +107,28 @@ function FormData2Obj(form_data) {
 
 function show_newRowInTable(diccForm, idTable) {
   // console.log(diccForm);
-  let tableRef = document.getElementById(idTable);
-  let newRowRef = tableRef.insertRow(-1);
+  let tableBody = document.getElementById(idTable);
+
+  //
+  let ref_newRowTableBody = tableBody.insertRow(-1);
 
   let newCell;
-  newCell = newRowRef.insertCell(0);
+  newCell = ref_newRowTableBody.insertCell(0);
   newCell.textContent = diccForm["areaFormUser"];
 
-  newCell = newRowRef.insertCell(1);
+  newCell = ref_newRowTableBody.insertCell(1);
   newCell.textContent = diccForm["cursoFormUser"];
 
-  newCell = newRowRef.insertCell(2);
+  newCell = ref_newRowTableBody.insertCell(2);
   newCell.textContent = diccForm["emailFormUser"];
+
+  newCell = ref_newRowTableBody.insertCell(3);
+
+  const div_newCell = document.createElement("div"),
+    strBtnEdit =
+      "<input type='submit' onclick='updRow(event);' value='Editar' />",
+    strBtnDel =
+      "<input type='submit' onclick='delRow(event)' value = 'Borrar' />";
+  div_newCell.innerHTML = strBtnEdit + strBtnDel;
+  newCell.appendChild(div_newCell);
 }

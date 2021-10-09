@@ -1,48 +1,42 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class=split lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
     <link
       rel="stylesheet"
       type="text/css"
       media="screen"
       href="../css/consulta.css"
-    />
+      />
     <title>STIPPS</title>
   </head>
 
   <body>
     <h2><i>Módulo de Consulta</i></h2>
-    <form id="formConsulta">
-      <table id="tblEntradaDato">
-        <td>AREA</td>
-        <td>
-          <select id="selArea">
-            <option>--Seleccionar--</option>
-            <option id="optID_AREA">
-              Aqui llega los datos de la base de datos
-            </option>
-          </select>
-        </td>
-        <tr>
-          <td>CURSOS</td>
-          <td>
-            <select id="selCurso">
-              <option>--Seleccionar--</option>
-              <option id="optID_CURSOS">
-                Aqui llega los datos de la base de datos
-              </option>
-            </select>
-          </td>
-        </tr>
-      </table>
-      <br />
-      <input type="submit" onclick= "addRow(event);" value="Agregar" />
-      <input type="submit" onclick= "updRow(event);" value="Modificar" />
-      <input type="submit" onclick= "delRow(event);" value="Eliminar" />
-      <input type="submit" onclick= "getRow(event);" value="Consultar" />
+    <form action="/src/js/query_server.js" id="formConsulta">
+      <label>AREA:
+        <select id="selArea">
+          <option>
+            --Seleccionar--
+          </option>
+          <option id="optID_AREA">
+            Aqui llega los datos de la base de datos
+          </option>
+        </select>
+      </label>
+      <br>
+      <label>
+        CURSOS:<select id="selCurso">
+          <option>--Seleccionar--</option>
+          <option id="optID_CURSOS">
+            Aqui llega los datos de la base de datos
+          </option>
+        </select>
+      </label>
+      <br>
+      <input type="submit" onclick="addRow(event);" value="Agregar" />
+      <input type="submit" onclick="getRow(event);" value="Consultar" />
     </form>
     <br />
     <div id="divSalidaDato" class="salidaTabla">
@@ -52,6 +46,7 @@
             <td>AREA</td>
             <td>CURSO</td>
             <td>DOCENTE</td>
+            <td>ACTIONS</td>
           </tr>
         </thead>
         <tbody>
@@ -59,6 +54,6 @@
         </tbody>
       </table>
     </div>
-    <script src="../js/consulta.js"></script>
+    <script type="text/javascript" src="../js/consulta.js"></script>
   </body>
 </html>
