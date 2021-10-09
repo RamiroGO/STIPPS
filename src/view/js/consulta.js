@@ -13,24 +13,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
   // Convertir texto a JSON
   let arrayJson = JSON.parse(stringLocalStorage) || [];
 
-  // Conteo Global de Elementos añadidos
-  id_reg = 0;
-
-  // Incrementamos el contador de filas dibujadas
-  let count_fila = 0;
   // Recorrer el arreglo y visualizar
-  arrayJson.forEach((elementJson) => {
-    count_fila++;
-    id_reg++;
-    show_newRowTable(idTable, elementJson, count_fila);
-  });
+  for (id_reg = 0; id_reg != arrayJson.length; id_reg++) {
+    show_newRowTable(idTable, arrayJson[id_reg], id_reg);
+  }
 });
 
 // Evento: Activamos los eventos de presionar botones.
 function addRow(event) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
-  id_reg++;
 
   // Guardamos el Formulario en una variable
   const $form_user = document.getElementById("formConsulta"),
@@ -42,7 +34,7 @@ function addRow(event) {
       id: id_reg,
       areaFormUser: form_data.get("nameArea"),
       cursoFormUser: form_data.get("nameCurso"),
-      emailFormUser: "Ramiro",
+      docente: "Irma",
     };
 
   // Guarda la información del formulario en el LocalStorage
@@ -53,7 +45,8 @@ function addRow(event) {
 
   // Reiniciar los valores de las casillas del formulario
   $form_user.reset();
-  console.log("Curso Añadido");
+  console.log("Curso Añadido: ", json_data);
+  id_reg++;
 }
 
 // Función para eliminar una fila.
@@ -61,7 +54,7 @@ function delData(event, sel_row) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
 
-  console.log("Id Recibida" + sel_row);
+  console.log("Id para Eliminar: " + sel_row);
 
   /// Eliminar elemento de la Base de Datos
   // Revisar el localStorage
@@ -111,7 +104,7 @@ function setDataBase(keyName, JSONData) {
 }
 
 // Dibujar una fila en la tabla
-function show_newRowTable(idTable, elementJson, count_fila) {
+function show_newRowTable(idTable, elementJson, sel_fila) {
   // Capturar el elemento, que se asume es una tabla, para que pueda ser manipulado.
   let $tableBody = document.getElementById(idTable);
 
@@ -139,18 +132,13 @@ function show_newRowTable(idTable, elementJson, count_fila) {
   // Creamos la primera celda de la fila creada.
   $newRow = $newRowTableBody.insertCell(3);
   // Escribimos el contenido de la celda creada.
-  $newRow.textContent = elementJson["emailFormUser"];
+  $newRow.textContent = elementJson["docente"];
 
   // Creamos la primera celda de la fila creada.
   $newRow = $newRowTableBody.insertCell(4);
 
   // Generamos los textos correspondientes a la creación de nuevas etiquetas html de tipo botones de envio de formulario (submit)
-  const strBtnDel =
-    "<input type='submit' key=" +
-    elementJson["id"] +
-    " onclick='delData(event," +
-    count_fila +
-    ")' value ='Borrar' />";
+  const strBtnDel = `<input type='submit' key=${elementJson["id"]} onclick='delData(event,${sel_fila})' value ='Borrar' />`;
 
   // Guardamos en el HTML el texto necesario correspondiente para la generación de los nuevos elementos que estarán dentro de la celda recien creada.
   $newRow.innerHTML = strBtnDel;
