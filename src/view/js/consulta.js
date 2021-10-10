@@ -2,13 +2,14 @@
 // let query_server = require("../../js/query_server.js");
 
 let id_reg = 0;
+const nameDataBase = "CursosLocalStorage";
 
 // Evento: Instrucción que se ejecuta después de cargar la página.
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", (event) => {
   const idTable = "tblSalidaDato";
 
   // Revisar el localStorage
-  let stringLocalStorage = localStorage.getItem("flujosDataLocalStorage");
+  let stringLocalStorage = localStorage.getItem(nameDataBase);
 
   // Convertir texto a JSON
   let arrayJson = JSON.parse(stringLocalStorage) || [];
@@ -24,6 +25,12 @@ function addRow(event) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
 
+  // Se autoincrementa antes de asignarse, para que comience en 1 la id del registro en la database.
+  // id_reg++;
+
+  // Reciclación de id's xd
+  id_reg = generateNewIdToDataBase(nameDataBase);
+  console.log("id generado", id_reg);
   // Guardamos el Formulario en una variable
   const $form_user = document.getElementById("formConsulta"),
     cant_fila = document.getElementById("tblSalidaDato").rows.length,
@@ -38,7 +45,7 @@ function addRow(event) {
     };
 
   // Guarda la información del formulario en el LocalStorage
-  setDataBase("flujosDataLocalStorage", json_data);
+  setDataBase(nameDataBase, json_data);
 
   // Inserta la información en la tabla; Para no recargar la página.
   show_newRowTable("tblSalidaDato", json_data, cant_fila);
@@ -46,7 +53,58 @@ function addRow(event) {
   // Reiniciar los valores de las casillas del formulario
   $form_user.reset();
   console.log("Curso Añadido: ", json_data);
-  id_reg++;
+
+  // Función para recibir el nuevo id de la base de datos.
+  function generateNewIdToDataBase(nameDataBase) {
+    // Revisar el localStorage
+    let stringLocalStorage = localStorage.getItem(nameDataBase);
+
+    // Convertir texto a JSON
+    let arrayJson = JSON.parse(stringLocalStorage) || [];
+
+    let isWorks;
+    let correId = 1;
+    let correJson;
+
+    do {
+      isWorks = true; // nuevo intento
+      for (
+        correJson = 0;
+        correJson != arrayJson.length && isWorks;
+        correJson++
+      ) {
+        const id_Local = arrayJson[correJson]["id"];
+        let is_same = id_Local == correId;
+        if (is_same) {
+          isWorks = false;
+        }
+      }
+
+      // Si no funcionó, siga con el siguiente id
+      if (!isWorks) {
+        correId++;
+      }
+    } while (!isWorks);
+
+    return correId;
+  }
+}
+
+function delAll(event, idTable, setNameDataBase) {
+  // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
+  event.preventDefault();
+
+  // Buscar el Database
+  localStorage.setItem(setNameDataBase, "[]");
+
+  // Capturar el elemento, que se asume es una tabla, para que pueda ser manipulado.
+  const $tableBody = document.getElementById(idTable);
+  $tableBody.innerHTML="";
+
+  // Reiniciar los valores de las casillas del formulario
+  const $form_user = document.getElementById("formConsulta");
+  $form_user.reset();
+  console.log("Todo Borrado");
 }
 
 // Función para eliminar una fila.
@@ -58,25 +116,30 @@ function delData(event, sel_row) {
 
   /// Eliminar elemento de la Base de Datos
   // Revisar el localStorage
-  let stringLocalStorage = localStorage.getItem("flujosDataLocalStorage");
+  let stringLocalStorage = localStorage.getItem(nameDataBase);
 
   // Convertir texto a JSON
   let arrayJson = JSON.parse(stringLocalStorage) || [];
 
   const idTable = "tblSalidaDato",
-    keyName = "flujosDataLocalStorage";
+    keyName = nameDataBase;
 
   // se reinicia la tabla
   let $tabla = document.getElementById(idTable);
+
+  // Definir objeto JSON que acumulará las variables a guardar en la base de datos
+  let JSONData = [];
   $tabla.innerHTML = "";
 
   /// Se recorre el arreglo de datos, pero se ignora el elemento que se quiere eliminar
   // Recorrer el arreglo y visualizar
-  for (id_reg = 0, JSONData = []; id_reg != arrayJson.length; id_reg++)
+  id_reg = 0;
+  for (let countRowDraw = 0; id_reg != arrayJson.length; id_reg++)
     if (id_reg != sel_row) {
       JSONData.push(arrayJson[id_reg]);
-      show_newRowTable(idTable, arrayJson[id_reg], id_reg);
-    }
+      show_newRowTable(idTable, arrayJson[id_reg], countRowDraw);
+      countRowDraw++; // Solo cuenta filas dibujadas; Inicializa en 0.
+    } else console.log("Borra el elemento: ", id_reg);
 
   // convertir JSON a texto
   let stringArrayJson = JSON.stringify(JSONData);
