@@ -31,6 +31,8 @@ function addRow(event) {
   // Reciclación de id's xd
   id_reg = generateNewIdToDataBase(nameDataBase);
   console.log("id generado", id_reg);
+  
+  
   // Guardamos el Formulario en una variable
   const $form_user = document.getElementById("formConsulta"),
     cant_fila = document.getElementById("tblSalidaDato").rows.length,
