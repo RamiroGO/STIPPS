@@ -8,8 +8,9 @@ DROP TABLE IF EXISTS `stipps`.`docentes`;
 CREATE TABLE IF NOT EXISTS `stipps`.`docentes` (
   `id` INT UNIQUE NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
-  `correo` MEDIUMTEXT NULL,
-  `passw` VARCHAR(50),
+  `correo` VARCHAR(100) NOT NULL,
+  `passw` VARCHAR(80) NOT NULL,
+  `descripcion` MEDIUMTEXT,
   PRIMARY KEY (`id`)
 );
 DESCRIBE `stipps`.`docentes`;
@@ -19,8 +20,9 @@ DROP TABLE IF EXISTS `stipps`.`usuarios`;
 CREATE TABLE IF NOT EXISTS `stipps`.`usuarios` (
   `id` INT UNIQUE NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
-  `correo` MEDIUMTEXT NULL,
-  `passw` VARCHAR(50),
+  `correo` VARCHAR(100) NOT NULL,
+  `passw` VARCHAR(80) NOT NULL,
+  `descripcion` MEDIUMTEXT,
   PRIMARY KEY (`id`)
 );
 DESCRIBE `stipps`.`usuarios`;
@@ -50,8 +52,8 @@ DESCRIBE `stipps`.`cursos`;
 SHOW INDEX FROM `stipps`.`cursos`;
 -- Tablas con Doble Llaves Foraneas:
 -- Crear Tablas: Tabla de Relaciones entre Usuarios y Curso:
-DROP TABLE IF EXISTS `stipps`.`cursos_usuarios`;
-CREATE TABLE IF NOT EXISTS `stipps`.`cursos_usuarios` (
+DROP TABLE IF EXISTS `stipps`.`rel_cursos_usuarios`;
+CREATE TABLE IF NOT EXISTS `stipps`.`rel_cursos_usuarios` (
   `id` INT UNIQUE NOT NULL AUTO_INCREMENT,
   `curso_id` INT NOT NULL,
   `usuario_id` INT NOT NULL,
@@ -60,11 +62,11 @@ CREATE TABLE IF NOT EXISTS `stipps`.`cursos_usuarios` (
   FOREIGN KEY (`usuario_id`) REFERENCES `stipps`.`usuarios`(`id`),
   PRIMARY KEY (`id`)
 );
-DESCRIBE `stipps`.`cursos_usuarios`;
-SHOW INDEX FROM `stipps`.`cursos_usuarios`;
+DESCRIBE `stipps`.`rel_cursos_usuarios`;
+SHOW INDEX FROM `stipps`.`rel_cursos_usuarios`;
 -- Crear Tablas: Tabla de Relaciones entre Docentes y Curso:
-DROP TABLE IF EXISTS `stipps`.`cursos_docentes`;
-CREATE TABLE IF NOT EXISTS `stipps`.`cursos_docentes` (
+DROP TABLE IF EXISTS `stipps`.`rel_cursos_docentes`;
+CREATE TABLE IF NOT EXISTS `stipps`.`rel_cursos_docentes` (
   `id` INT UNIQUE NOT NULL AUTO_INCREMENT,
   `curso_id` INT NOT NULL,
   `docente_id` INT NOT NULL,
@@ -73,5 +75,5 @@ CREATE TABLE IF NOT EXISTS `stipps`.`cursos_docentes` (
   FOREIGN KEY (`docente_id`) REFERENCES `stipps`.`docentes`(`id`),
   PRIMARY KEY (`id`)
 );
-DESCRIBE `stipps`.`cursos_docentes`;
-SHOW INDEX FROM `stipps`.`cursos_docentes`;
+DESCRIBE `stipps`.`rel_cursos_docentes`;
+SHOW INDEX FROM `stipps`.`rel_cursos_docentes`;
