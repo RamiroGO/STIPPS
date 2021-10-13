@@ -53,25 +53,25 @@ VALUES
 -- [Tablas con doble llave foranea]:
 -- Insertar Relaciones Cursos - Usuarios
 INSERT INTO `stipps`.`rel_cursos_usuarios`
-    (curso_id, usuario_id)
+    (curso_id,usuario_id)
 VALUES
-    (1, 1),
-    (1, 2),
-    (1, 3),
-    (5, 1),
-    (5, 2),
-    (5, 3),
-    (11, 3),
-    (15, 1),
-    (16, 2)
+    (1,       1),
+    (1,       2),
+    (1,       3),
+    (5,       1),
+    (5,       2),
+    (5,       3),
+    (11,      3),
+    (15,      1),
+    (16,      2)
 ;
 -- Insertar Relaciones Cursos - Docentes
 INSERT INTO `stipps`.`rel_cursos_docentes`
-    (curso_id, docentes_id)
+    (curso_id,docentes_id)
 VALUES
-    (1, 1),
-    (5, 2),
-    (11, 3),
-    (15, 1),
-    (16, 2)
+    (1,       1),
+    (5,       2),
+    (11,      3),
+    (15,      1),
+    (16,      2)
 ;
