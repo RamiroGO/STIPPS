@@ -6,21 +6,23 @@ const encrypt_psw = require("./encrypt_psw.js");
 
 // nombre de los campos que escribre el usuario en el view del handlebars / HTML
 const fields_user = {
-	usernameField: "username",
-	passwordField: "password",
+	usernameField: "NameUser",
+	passwordField: "PassUser",
 	passReqToCallback: true
 };
 
-// Ruta de Acceso para Ingresar a una cuenta ya creada con los datos de ingreso ya Ingresados en el formulario
+// Función de Ruta Local de Acceso para Ingresar a una cuenta ya creada con los datos de ingreso ya Ingresados en el formulario
 passport.use("local.signin", new LocalStrategy(fields_user,
 	// CallBack
 	async (req, username, password, done) => {
 		// La información ingresada por el usuario se mostrará por acá.
 		// console.log("Passport: Datos del usuario ingresados:", req.body);
 
+		console.log("estoy en passport_user");
+		console.log(username);
 		// Busca el Usuario en la Base de Datos, a partir del username: Retornará una lista.
 		const rows_users = await connect_mysql.query(
-			"SELECT * FROM `users` WHERE `username` = ?",
+			"SELECT * FROM `usuarios` WHERE `nombre` = ?",
 			[username]
 		);
 
@@ -70,7 +72,7 @@ passport.use("local.signup", new LocalStrategy(
 		// console.log("Datos del usuario cifrados:", newUser);
 
 		// Guardar el Usuario en la Base de Datos
-		const result = await connect_mysql.query("INSERT INTO users SET ?", [newUser]);
+		const result = await connect_mysql.query("INSERT INTO usuarios SET ?", [newUser]);
 
 		// Guarde el id como parte de los parámetros del usuario
 		newUser.id = result.insertId;
@@ -89,7 +91,7 @@ passport.serializeUser((user, done) => {
 
 // Deserializar es partir de la id para poder volver a obtener los datos del usuario.
 passport.deserializeUser(async (id, done) => {
-	const rows = await connect_mysql.query("SELECT * FROM users WHERE id = ?", [id]);
+	const rows = await connect_mysql.query("SELECT * FROM usuarios WHERE id = ?", [id]);
 	done(null, rows[0]);
 });
 

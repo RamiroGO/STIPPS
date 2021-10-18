@@ -21,7 +21,7 @@
   },
   "name": "proyecto_irma_gruponaranja_stipps",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server/connect_server.js",
   "directories": {
     "doc": "docs"
   },

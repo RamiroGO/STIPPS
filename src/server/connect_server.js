@@ -14,7 +14,7 @@ const passport = require("passport");
 const connect_server = express();
 const PORT = 3000;
 // - Cargar el archivo passport que tenemos creado.
-require('../lib/passport');
+require('../lib/passport_user');
 
 // Settings
 connect_server.set('port', process.env.PORT || PORT);
@@ -27,9 +27,9 @@ connect_server.engine('.hbs', exphbs({
   helpers: require('../lib/time_ago.js')
 }));
 connect_server.set('view engine', '.hbs');
+connect_server.set('views', patch.join(__dirname, "../views/html")); // Ubicar la carpeta de Views donde se encuentran los HTMLs
 connect_server.engine('html', require('ejs').renderFile);
 connect_server.set('view engine', 'html');
-connect_server.set('views', patch.join(__dirname, "../views/html")); // Ubicar la carpeta de Views donde se encuentran los HTMLs
 
 // Middlewares
 // - Importar servicio para enviar mensajes entre vistas.
@@ -63,9 +63,9 @@ connect_server.use((req, res, next) => {
 });
 
 // Routes
-connect_server.use(require('./routes/index.js'));
-connect_server.use(require('./routes/routes.js'));
+connect_server.use(require('./routes/routes_acceso'));
 connect_server.use(require('./routes/authentication'));
+connect_server.use("cursos", require('./routes/routes.js'));
 
 // Public
 connect_server.use(express.static(patch.join(__dirname, 'public')));

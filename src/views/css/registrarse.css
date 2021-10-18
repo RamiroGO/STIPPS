@@ -1,0 +1,20 @@
+table,
+td {
+  border-style: solid;
+  border: 1px solid;
+  text-align: right;
+}
+
+td.support {
+  text-align: center;
+}
+
+button {
+  align-self: center;
+  align-content: center;
+  align-items: center;
+}
+
+.btnRegistro {
+  text-align: center;
+}

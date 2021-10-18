@@ -13,5 +13,9 @@
             "name": "Local instance MySQL80",
             "password": ""
         }
-    ]
+    ],
+    "search.exclude": {
+        "**/*.code-search": false,
+        "**/bower_components": false
+    }
 }

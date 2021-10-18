@@ -6,9 +6,9 @@ const connect_mysql = mysql.createConnection(key_database);
 
 connect_mysql.connect((err) => {
   if (err) {
-    console.log("Error Connect: =( ", err);
+    console.log("Error Connect to Database (U_U') ", err);
     return err;
-  } else console.log("Connection SuccesFull! =D ");
+  } else console.log("Connection Database SuccesFull! (^_^) ");
 });
 
 module.exports = connect_mysql;

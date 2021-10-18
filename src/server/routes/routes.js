@@ -37,6 +37,7 @@ query_server.post('', (req, res) => {
 
 query_server.get("/:id", (req, res) => {
   console.log(req.params.id);
+  console.log("Enserio?")
   const values = req.params.id;
   const consulta_sql = "SELECT * FROM cursos WHERE id = ?;";
   database.query(consulta_sql, values, (err, data) => {

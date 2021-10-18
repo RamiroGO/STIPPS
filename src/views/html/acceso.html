@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-	Esto es la View de Acceso
-</body>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SignIn - STIPPS</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/acceso.css">
+		<!-- Libreria jquery -->
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<form id="frmAcceso" method="post" action="/signin">
+			<table id="tblEntradaDato" class="tblEntrada">
+				<tbody id="tbEntradaDato">
+					<tr>
+						<td width="15%" rowspan="4">
+							<img title="Logo Stipps" src="/img/logo2.PNG" width="200" height="200">
+						</td>
+						<td colspan="2" class="Logo">
+							<label>PÁGINA DE ACCESO</label>
+							<a href="signup">
+								<label>Registrarse</label>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td><label for="NameUser">Usuario</label></td>
+						<td> <input type="text" value="" size="20"
+								id="NameUser" name="NameUser"
+								class="fondoText" required>
+						</td>
+					</tr>
+					<tr>
+						<td><label for="PassUser">Contraseña</label></td>
+						<td>
+							<input type="text" value="" size="20"
+								id="PassUser" name="PassUser"
+								class="fondoText" required>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button>Iniciar Sesion</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<script src="js/acceso.js"></script>
+	</body>
 </html>
