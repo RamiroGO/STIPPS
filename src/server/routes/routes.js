@@ -1,10 +1,11 @@
+// RUTAS DEL SERVIDOR
 const express = require("express");
-const db = require('../../database/conexion.js');
+const database = require('../../database/connect_database_mysql.js');
 
 const query_server = express.Router();
 query_server.get("/all", (req, res) => {
   const consulta_sql = "SELECT * FROM cursos";
-  db.query(consulta_sql, (err, data) => {
+  database.query(consulta_sql, (err, data) => {
     if (err) return err;
     else res.json(data);
   });
@@ -17,7 +18,7 @@ query_server.post('', (req, res) => {
   const consulta_sql =
     "INSERT INTO stipps.cursos (area, nombre, descripcion) VALUES (?,?,?)";
 
-  db.query(consulta_sql, values, (err, result) => {
+  database.query(consulta_sql, values, (err, result) => {
     if (err) {
       console.log("inserción fallida :(");
       res.json({
@@ -38,7 +39,7 @@ query_server.get("/:id", (req, res) => {
   console.log(req.params.id);
   const values = req.params.id;
   const consulta_sql = "SELECT * FROM cursos WHERE id = ?;";
-  db.query(consulta_sql, values, (err, data) => {
+  database.query(consulta_sql, values, (err, data) => {
     if (err) {
       console.log("petición fallida");
       return err;
@@ -56,7 +57,7 @@ query_server.put("/:id", (req, res) => {
   const consulta_sql =
     "UPDATE stipps.cursos SET nombre_envia=?, nombre_recibe=?, tipo_recurso=?, cantidad=?, FechaHora=? WHERE id=?";
 
-  db.query(consulta_sql, values, (err, result) => {
+  database.query(consulta_sql, values, (err, result) => {
     if (err) {
       console.log("edición fallida :(");
       res.json({
@@ -77,7 +78,7 @@ query_server.delete("/:id", (req, res) => {
   console.log(req.params.id);
   const values = parseInt(req.params.id);
   const consulta_sql = "DELETE FROM cursos WHERE id = ?;";
-  db.query(consulta_sql, values, (err, data) => {
+  database.query(consulta_sql, values, (err, data) => {
     if (err) {
       console.log("eliminación fallida");
       return err;

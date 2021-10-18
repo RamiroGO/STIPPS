@@ -7,6 +7,9 @@ presionando "Go Live" en la barra inferior de Visual Studio Code
 Ctrl + Shift + I
 - Consola
 
+# Abrir Nodemon para ejecutar Servidor de Node-Express
+npm run dev
+
 # Cargar y Guardar en Repositorios Git y GitHub
 ## 1. Cargar modificaciones de otros colaboradores:
 git fetch
@@ -31,7 +34,7 @@ npm init -y
 
 ### Instalar Dependencias del Proyecto:
 npm install mysql express morgan
-npm install express express-handlebars express-session mysql express-mysql-session morgan bcryptjs passport passport-local timeago.js connect-flash express-validator
+npm install ejs express express-handlebars express-session mysql express-mysql-session morgan bcryptjs passport passport-local timeago.js connect-flash express-validator
 
 ### Instalar Dependencias de Desarrollo: Para evitar el tener que reiniciar el servidor por cada modificación.
 npm install nodemon -D
