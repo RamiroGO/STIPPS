@@ -5,14 +5,14 @@ td {
   text-align: right;
 }
 
-td.support {
-  text-align: center;
-}
-
 button {
   align-self: center;
   align-content: center;
   align-items: center;
+}
+
+.support {
+  text-align: center;
 }
 
 .btnRegistro {

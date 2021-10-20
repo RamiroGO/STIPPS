@@ -8,34 +8,28 @@ form_user.addEventListener("submit", (event) => {
 	const _string_dataUser = JSON.stringify(_dataUser);
 	console.log(_string_dataUser);
 
-	fetch('http://localhost:3000/profile',
+	fetch('http://localhost:3000/signup',
 		{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: _string_dataUser
-		}).then(console.log("enviado..."));
-	// .done((result) => {
-	// 		if ($("#txtUsuario").val() == usuario &&
-	// 			$("#txtClave").val() == clave) {
-
-	// 			alert("Bienvenido");
-	// 			location.href = "consulta.html";
-
-	// 		} else {
-	// 			alert("usuario no existe o clave incorrecta");
-	// 		}
-	// 	})
+		})
+		.then(console.log("enviado..."))
+		// .done(() => {
+		// 	alert("Bienvenido");
+		// 	location.href = "consulta.html";
+		// });
 
 	// Funciones Internas del evento
 	function FormData2Obj(form_data) {
 		return {
 			name_user: form_data.get("txtNombre"),
-			last_name: form_data.get("txtApellido"),
-			telephone: form_data.get("txtTelefono"),
-			address: form_data.get("txtDireccion"),
-			psw: form_data.get("txtPsw1")
+			full_user: form_data.get("txtApellido"),
+			pass_user: form_data.get("txtPsw1"),
+			tele_user: form_data.get("txtTelefono"),
+			addr_user: form_data.get("txtDireccion")
 		};
 	}
 });

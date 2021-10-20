@@ -11,7 +11,6 @@
 
 # Stacks por Implementar:
 ### Thunder Client
-### Ajax
 ## MySQL
 ### WorkBench
 

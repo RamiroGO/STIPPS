@@ -6,30 +6,17 @@
     "configurations": [
         {
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
+            "internalConsoleOptions": "openOnFirstSessionStart",
             "name": "nodemon",
-            "program": "${workspaceFolder}/src/server/connect_server.js",
+            "program": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js",
+            "runtimeExecutable": "${workspaceFolder}/src/server/connect_server.js",
             "request": "launch",
             "restart": true,
-            "runtimeExecutable": "nodemon",
             "skipFiles": [
-                "<node_internals>/**"
+                "<node_internals>/**",
+                "!**/node_modules/**"
             ],
             "type": "pwa-node"
-        },
-        {
-            "name": "Launch Edge",
-            "request": "launch",
-            "type": "pwa-msedge",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "edge",
-            "request": "launch",
-            "name": "Iniciar Edge para localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
         }
     ]
 }

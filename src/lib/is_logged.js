@@ -7,6 +7,7 @@ module.exports = {
 	// El método 'isAuthenticated' solo existe si se hace uso de la librería 'passport' y se inicializa para ser usada por las rutas en sus 'Request'.
 	isLoggedIn(req, res, next) {
 		if (req.isAuthenticated()) {
+			console.log("YA ESTÁ LOGUEADO!!! P(^o^)/");
 			return next();
 		}
 		return res.redirect('/signin'); // Redirigir al usuario no logueado a la página SignIn para loguearse.
@@ -15,6 +16,7 @@ module.exports = {
 	// Cuando se implementa este método, los usuarios que están logueados no pueden acceder a las rutas donde se implementaron.
 	isNotLoggedIn(req, res, next) {
 		if (!req.isAuthenticated()) {
+			console.log("No está logueado... ( -_-*)");
 			return next();
 		}
 		return res.redirect('/profile'); // Redirigir en su página de profile.
