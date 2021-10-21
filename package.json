@@ -19,7 +19,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "nodemon src/server/connect_server.js"
+    "views": "start msedge localhost:3000",
+    "server": "nodemon src/server/connect_server.js",
+    "start": "nodemon src/server/connect_server.js & start msedge https:localhost:3000"
   },
   "repository": {
     "type": "git",

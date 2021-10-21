@@ -42,6 +42,7 @@ connect_server.use(passport.session());
 // Global Variables
 // El 'req' (Request): representa los parámetros que provienen de la petición.
 connect_server.use((req, res, next) => {
+  /*
   console.log("connect_server.js: Preparando next()")
   // Datos de validación del usuario activo
   console.log("connect_server recibe: " + [
@@ -52,9 +53,9 @@ connect_server.use((req, res, next) => {
     req.body.addr_user
   ]);
   // La variable user ahora será accesible desde el HTML
-  connect_server.locals.user = req.body;
+  connect_server.locals.user = req.body;*/
   next();
-  console.log("connect_server.js: Terminando next()")
+  // console.log("connect_server.js: Terminando next()");
 });
 
 // Routes
