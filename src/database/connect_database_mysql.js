@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const { database: key_database } = require('./key_rami.js');
+const { database: key_database } = require('./key_irma.js');
 
 // traer la información de la key_database para generar la conexión con la base de datos
 const connect_mysql = mysql.createConnection(key_database);

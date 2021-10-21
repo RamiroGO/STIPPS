@@ -4,7 +4,7 @@ const express = require('express');
 const patch = require('path');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session');
-const { database } = require('../database/key_rami.js');
+const { database } = require('../database/key_irma.js');
 // Importar passport en el conector del servidor para poder ejecutar su código principal
 const passport = require('passport');
 
