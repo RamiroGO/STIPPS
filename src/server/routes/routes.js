@@ -8,6 +8,7 @@ const { isNotLoggedIn } = require("../../lib/is_logged.js");
 
 // Ventana de Inicio de la página web
 router.get("/", isNotLoggedIn, (_req, res) => {
+	console.log('get_init_Not Log');
 	// Dibuja la página Principal para acceder a un usuario ya existente
 	res.render("acceso");
 });

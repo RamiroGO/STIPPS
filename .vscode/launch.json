@@ -14,7 +14,7 @@
             "restart": true,
             "skipFiles": [
                 "<node_internals>/**",
-                "!**/node_modules/**"
+                // "!**/node_modules/**"
             ],
             "type": "pwa-node"
         }

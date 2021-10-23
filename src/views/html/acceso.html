@@ -19,36 +19,40 @@
 						<td width="15%" rowspan="4">
 							<img title="Logo Stipps" src="/img/logo2.PNG" width="200" height="200">
 						</td>
-						<td colspan="2" class="Logo">
+						<td class="center" colspan="2" class="Logo">
 							<label>PÁGINA DE ACCESO</label>
-							<a href="signup">
+						</td>
+					</tr>
+					<tr>
+						<td class="label_input">
+							<label for="NameUser">Usuario</label>
+						</td>
+						<td>
+							<input type="text" value="" size="20" id="NameUser" name="name_user"
+								class="fondoText" required>
+						</td>
+					</tr>
+					<tr>
+						<td class="label_input">
+							<label for="PassUser">Contraseña</label></td>
+						<td>
+							<input type="password" value="" size="20" id="PassUser" name="pass_user"
+								class="fondoText" placeholder="Contraseña" required>
+						</td>
+					</tr>
+					<tr>
+						<td class="center">
+							<button>Iniciar Sesion</button>
+						</td>
+						<td class="center">
+							<a class="center" href="signup">
 								<label>Registrarse</label>
 							</a>
-						</td>
-					</tr>
-					<tr>
-						<td><label for="NameUser">Usuario</label></td>
-						<td> <input type="text" value="" size="20"
-								id="NameUser" name="NameUser"
-								class="fondoText" required>
-						</td>
-					</tr>
-					<tr>
-						<td><label for="PassUser">Contraseña</label></td>
-						<td>
-							<input type="text" value="" size="20"
-								id="PassUser" name="PassUser"
-								class="fondoText" required>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<button>Iniciar Sesion</button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</form>
-		<script src="js/acceso.js"></script>
+		<!-- <script src="js/acceso.js"></script> -->
 	</body>
 </html>

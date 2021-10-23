@@ -5,3 +5,15 @@
 .tblEntrada {
   border: 1px solid;
 }
+
+td{
+  border: 1px solid;
+}
+
+.label_input{
+  text-align: right;
+}
+
+td.center{
+  text-align:center;
+}

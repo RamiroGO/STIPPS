@@ -15,9 +15,13 @@ encrypt_psw.encryptPassword = async (password) => {
 }
 
 // Comparador de Contraseña para realizar el logeo del usuario
+// La desencriptación es un trabajo que no se puede secuenciar en los procesos, por tanto hay que esperarlo.
 encrypt_psw.matchPassword = async (password, savedPassword) => {
 	try {
-		return await bcrypt.compare(password, savedPassword);
+		// Guardamos la función asíncrona en una promesa.
+		const fcn_compare = await bcrypt.compare(password, savedPassword);
+		// Ejecutamos la promesa.
+		return fcn_compare;
 	}
 	catch (e) {
 		console.log(e);

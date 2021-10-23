@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Traer las variables de autenticación del usuario desde el módulo passport
-const passport_user = require("../../../lib/passport_user");
-
 // Solo se debe implementar en las rutas que se desean proteger, no en las rutas de acceso.
 const { isLoggedIn, isNotLoggedIn } = require("../../../lib/is_logged");
 
@@ -15,7 +12,7 @@ router.get("/signup", (req, res) => {
 });
 
 // Ruta para visualizar el formulario SignIn
-router.get("/signin", (req, res) => {
+router.get("/signin", isNotLoggedIn, (req, res) => {
 	console.log("Route GET signin NotLog");
 	// Construcción del response para visuLizar la página de acceso
 	res.render("acceso");
@@ -39,8 +36,14 @@ router.get("/profile", (req, res) => {
 // 	res.render("consulta");
 // });
 
-router.get("/consulta", (req, res) => {
-	console.log("Route GET consulta -- ");
+router.get("/consulta", isNotLoggedIn,(req, res) => {
+	console.log("Route GET consulta NotLog");
+	// Siendo que la ruta get/signin tiene su propio render, podemos hacer un redirect que cambie la ruta del GET en el origen.
+	// Las rutas de los GET de origen queda inhabilitado frente al redireccionamiento del enrutador.
+	res.redirect('/signin');
+});
+router.get("/consulta", isLoggedIn,(req, res) => {
+	console.log("Route GET consulta Is_Log");
 	// Si del lado del HTML hay un formulario con un GET esperando respuesta, este será capáz de ejecutar este response.render, el cual portará el documento HTML de la consulta.
 	// Cargamos el documento HTML presente en la carpeta de "views/html" previamente definidas en el servidor
 	// Se establece el archivo html para la ruta '/consulta'
