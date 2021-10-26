@@ -5,7 +5,7 @@ module.exports = {
 	// Método para determinar si existe un usuario loggueado.
 	// Cuando se implementa este método, los usuarios que no están logueados no pueden acceder a las rutas donde se implementaron.
 	isLoggedIn(req, res, next) {
-		if (req.isAuthenticated()) {
+		if (req.body.user.isAuthenticated()) {
 			console.log("YA ESTÁ LOGUEADO!!! P(^o^)/");
 			return next();
 		}
@@ -15,7 +15,7 @@ module.exports = {
 
 	// Cuando se implementa este método, los usuarios que están logueados no pueden acceder a las rutas donde se implementaron.
 	isNotLoggedIn(req, res, next) {
-		if (!req.isAuthenticated()) {
+		if (!req.body.user.isAuthenticated()) {
 			console.log("No está logueado... ( -_-*)");
 			return next();
 		}

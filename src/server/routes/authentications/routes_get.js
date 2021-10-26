@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+
+const util = require('util');
+const sleep = util.promisify(setTimeout);
+
 // Solo se debe implementar en las rutas que se desean proteger, no en las rutas de acceso.
 const { isLoggedIn, isNotLoggedIn } = require("../../../lib/is_logged");
 
@@ -12,18 +16,18 @@ router.get("/signup", (req, res) => {
 });
 
 // Ruta para visualizar el formulario SignIn
-router.get("/signin", isNotLoggedIn, (req, res) => {
+router.get("/signin", isNotLoggedIn, async (req, res) => {
 	console.log("Route GET signin NotLog");
 	// Construcción del response para visuLizar la página de acceso
 	res.render("acceso");
 });
 
 // Ruta para renderizar el profile cuando este funciona.
-router.get("/profile", (req, res) => {
+router.get("/profile", isLoggedIn, (req, res) => {
 	console.log("Route GET profile -- ");
-	// Esta ruta get/profile se puteó, hay que mandarla a otra ruta get para que funcione.
+	// Esta ruta get/profile se dañó, hay que mandarla a otra ruta get para que funcione.
 	// el 'res' debe mandar la orden de redirect al formulario HTML, para modificar el 'action' del formulario.
-	res.redirect('/consulta');
+	res.render('consulta');
 });
 
 // router.get("/profile", isNotLoggedIn, (req, res) => {

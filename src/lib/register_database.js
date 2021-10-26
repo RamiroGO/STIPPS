@@ -1,30 +1,7 @@
 const connect_mysql = require("../database/connect_database_mysql");
 const encrypt_psw = require("./encrypt_psw.js");
-
-async function isAwait_userValidate(username, password) {
-	// Busca el Usuario en la Base de Datos, a partir del username: Retornará una lista.
-	const candidates = await connect_mysql.query(
-		"SELECT * FROM `usuarios` WHERE `nombre` = ?",
-		[username]
-	);
-
-	if (candidates.length == 0) {
-		console.log('Usuario no encontrado');
-		return false;
-	} else if (candidates.length > 0) {
-		return isAwait_passValidate(candidates[0], password);
-	}
-
-	async function isAwait_passValidate(candidate, password) {
-		// Validación del Usuario
-		console.log("Validando Usuario...");
-		const passw_candidate = candidate.passw;
-		// Comparación de la contraseña ingresada con la Registrada a través de un método en 'encrypt_psw'.
-		const _is_valid = await encrypt_psw.matchPassword(password, passw_candidate);
-		console.log("Validación exitosa: ", _is_valid);
-		return _is_valid;
-	}
-}
+let { users_log, user_log } = require('../lib/hi_user');
+const hi_user = require("../lib/hi_user");
 
 module.exports = {
 	register_database: class {
@@ -94,7 +71,50 @@ module.exports = {
 		}
 	},
 
-	IsExist(username, password) {
-		return isAwait_userValidate(username, password);
-	},
+	Redirect_IsValidUser: async function (req, views, res) {
+		const
+			username = req.body.name_user,
+			password = req.body.pass_user;
+
+		// Busca el Usuario en la Base de Datos, a partir del username: Retornará una lista.
+		return await connect_mysql.query(
+			"SELECT * FROM `usuarios` WHERE `nombre` = ?",
+			[username],
+			async (err, candidates) => {
+				if (err)
+					console.log("Ok", err)
+				else if (candidates.length == 0) {
+					console.log('Usuario no encontrado');
+					return false;
+				}
+				else if (candidates.length > 0) {
+					// Validación del Usuario
+					console.log("Validando Usuario...");
+					let passw_candidate = candidates[0].passw;
+					// Comparación de la contraseña ingresada con la Registrada a través de un método en 'encrypt_psw'.
+					await encrypt_psw.matchPassword(password, passw_candidate)
+						.then((_is_valid) => {
+							console.log("Validación exitosa: ", _is_valid);
+							if (_is_valid) {
+								// Parámetros de un usuario:
+								user_log = {
+									nombre: candidates[0].nombre,
+									contra: candidates[0].passw,
+									id: candidates[0].id
+								};
+
+								// Añadir al nuevo usuario a la lista.
+								users_log.push(user_log);
+								req.body.user = hi_user.SignIn(user_log);
+
+								res.redirect(views["succesfull"]);
+							}
+							else if (_is_valid == false) {
+								res.redirect(views["failed"]);
+							}
+						});
+				}
+			}
+		);
+	}
 }

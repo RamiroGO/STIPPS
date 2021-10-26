@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { register_database, IsExist } = require('../../../lib/register_database');
+const { user_log } = require("../../../lib/hi_user");
+const { register_database, Redirect_IsValidUser } = require('../../../lib/register_database');
+
+
+const util = require('util');
+const sleep = util.promisify(setTimeout);
 
 // Solo se debe implementar en las rutas que se desean proteger, no en las rutas de acceso.
 const { isNotLoggedIn } = require("../../../lib/is_logged");
-const { is } = require('express/lib/request');
 
 // Para los post no se usa el 'render', sino el 'redirect'
 // Los post en el HTML solo son capaces de enviar objetos a través de las rutas HTTP
@@ -32,31 +36,32 @@ router.post("/signup", isNotLoggedIn, (req, res) => {
 	const _register_database = new register_database(Fields_Database_User);
 
 	// Guardar en la Base de Datos
-	req.user = _register_database.saveUserMySQL();
-	console.log(req.user.Fields_Database.name_user);
+	req.body.user = _register_database.saveUserMySQL();
+	console.log(req.body.user.Fields_Database.name_user);
 
-	console.log("0000000000000000000000000000000000000000000");
 	// // terminado el registro en "post/signup" => Ir a la View "get/profile"
 	res.redirect('/profile');
 });
 
 // Ruta para acceder con los datos ya ingresados en la página SignIn
 // Dado que esto es un Middleware, se ejecuta antes que el resto de rutas, y su declaración hace uso de la función 'next'.
-router.post("/signin", isNotLoggedIn, (req, res, next) => {
+router.post("/signin", isNotLoggedIn, async (req, res) => {
 	console.log("Route POST signin NotLog: Authentication");
-	console.log("Ruta de Logueo en cuenta ya existente");
+	console.log("Ruta de Logueo para entrar en una cuenta ya existente");
+
+	const opc_routes = {
+		"succesfull": "/profile",
+		"failed": "/signup"
+	};
 
 	// Comparar en la Base de Datos
-	let _is_valid = IsExist(req.body.name_user, req.body.pass_user);
+	await Redirect_IsValidUser(req, opc_routes, res);
+	// No Obedece el Await y sigue de largo....
 	
-	if (_is_valid == true) {
-		console.log("Ir al Profile")
-		res.redirect('profile');
-	}
-	else if (_is_valid == false) {
-		console.log("Ir a la verga")
-		res.redirect('signup');
-	}
+	// Este await si lo debe de obedecer si o si. (>_<)
+	await sleep(4000);
+	console.log("esperando");
+	
 });
 
 // Ruta para validar el acceso del usuario.

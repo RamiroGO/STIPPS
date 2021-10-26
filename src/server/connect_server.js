@@ -22,6 +22,7 @@ connect_server.use(express.urlencoded({ extended: false }));
 connect_server.use(express.json());
 
 // Global Variables
+let user_logued;
 // El 'req' (Request): representa los parámetros que provienen de la petición.
 connect_server.use((req, res, next) => {
   /*
@@ -36,8 +37,9 @@ connect_server.use((req, res, next) => {
   ]);
   // La variable user ahora será accesible desde el HTML
   connect_server.locals.user = req.body;*/
-  req.isAuthenticated = hi_user(req.body.name_user, req.body.pass_user);
-
+  req.body.user = hi_user.Initialization(user_logued);
+  user_logued = req.body.user;
+  console.log("Usuarios Actuales: ", hi_user.cant_users);
   next();
 });
 
