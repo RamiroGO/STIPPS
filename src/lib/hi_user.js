@@ -1,49 +1,49 @@
 // Lista de usuarios logueados
-let users_log = [];
+let history_users_log = [];
+
+// // Parámetros de un usuario:
+// Me aprovecho de que un usuario solo podrá modificar uno de los datos simultáneamente: uso de 3.
+// 'nombre': Nombre del Usuario
+// 'contra': Es el password o contraseña proporcionado por el usuario
+// 'id': Es el idnetificador del usuario proporcionado por la base de datos al momento de registrarse.
+
+let actual_user = {
+	nombre: "",
+	contra: "",
+	id: 0
+};
 
 module.exports = {
-	cant_users: users_log.length,
-	// // Parámetros de un usuario:
-	// Me aprovecho de que un usuario solo podrá modificar uno de los datos simultáneamente: uso de 3.
-	// 'nombre' es proporcionado por el usuario
-	// 'contra' es el identificador del equipo del usuario
-	// 'id' es proporcionado por el servidor después de loguearse
-	Initialization: function (user_exist) {
-
-
-		if (user_exist) {
-			return user_exist;
-		}
-		else {
-			const user_default = {
-				nombre: "",
-				contra: "",
-				id: 0,
-				isAuthenticated: function () {
-					return users_log.lastIndexOf(-1).id > 0;
-				}
-			};
-
-			users_log.push(user_exist);
-			return user_default;
-		}
-
-	},
 	SignIn: function (user) {
-		users_log.push({
-			nombre: user.nombre,
-			contra: user.contra,
-			id: user.id
-		});
+		// Modificar el Usuario Actual
+		actual_user.nombre = user.nombre;
+		actual_user.contra = user.contra;
+		actual_user.id = user.id;
 
-		return {
-			nombre: user.nombre,
-			contra: user.contra,
-			id: user.id,
-			isAuthenticated: function () {
-				return users_log.lastIndexOf(-1).id > 0;
-			}
-		};
+		// Enviar la información del acceso del usuario al historial del servidor.
+		history_users_log.push(actual_user);
 	},
-	users_log: users_log
+	// La autenticación es un proceso para comprobar que el usuario que está desarrollando las peticiones al servidor
+	// está haciéndolo desde su cuenta personal posterior a la comprobación de su acceso.
+	// la variable 'actual_user':
+	// - Representa los parámetros que identifican al usuario autenticado.
+	// - 'actual_user' debería de provenir del request que recibe el servidor desde el usuario.
+	// - Si el servidor almacena 'actua_user' entonces será incapaz de mantener la sesión iniciada para mútliples usuarios, porque entrarían en conflicto.
+	isAuthenticated: function () {
+		let is_exist = false;
+
+		// Comprobación de usuario actual válido para autenticación.
+		if (actual_user.id !== 0){
+			// Buscar la existencia del usuario actual en el historial de usuarios logueados
+			for (let index = 0; index != history_users_log.length && !is_exist; index++) {
+				const _user = history_users_log[index];
+				if (actual_user.nombre === _user.nombre &&
+					actual_user.contra === _user.contra &&
+					actual_user.id === _user.id) {
+					is_exist = true;
+				}
+			}
+		}
+		return is_exist;
+	}
 }

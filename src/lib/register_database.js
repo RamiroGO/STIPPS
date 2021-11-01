@@ -1,7 +1,6 @@
 const connect_mysql = require("../database/connect_database_mysql");
 const encrypt_psw = require("./encrypt_psw.js");
-let { users_log, user_log } = require('../lib/hi_user');
-const hi_user = require("../lib/hi_user");
+const { SignIn } = require("../lib/hi_user");
 
 module.exports = {
 	register_database: class {
@@ -71,13 +70,13 @@ module.exports = {
 		}
 	},
 
-	Redirect_IsValidUser: async function (req, views, res) {
+	Redirect_IsValidUser: function (req, views, res) {
 		const
 			username = req.body.name_user,
 			password = req.body.pass_user;
 
 		// Busca el Usuario en la Base de Datos, a partir del username: Retornará una lista.
-		return await connect_mysql.query(
+		return connect_mysql.query(
 			"SELECT * FROM `usuarios` WHERE `nombre` = ?",
 			[username],
 			async (err, candidates) => {
@@ -104,8 +103,7 @@ module.exports = {
 								};
 
 								// Añadir al nuevo usuario a la lista.
-								users_log.push(user_log);
-								req.body.user = hi_user.SignIn(user_log);
+								SignIn(user_log);
 
 								res.redirect(views["succesfull"]);
 							}

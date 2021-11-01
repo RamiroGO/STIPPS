@@ -2,9 +2,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const patch = require('path');
-const { database } = require('../database/key_rami.js');
-// Importar passport en el conector del servidor para poder ejecutar su código principal
-const hi_user = require('../lib/hi_user');
 
 // initializations
 const connect_server = express();
@@ -22,24 +19,9 @@ connect_server.use(express.urlencoded({ extended: false }));
 connect_server.use(express.json());
 
 // Global Variables
-let user_logued;
-// El 'req' (Request): representa los parámetros que provienen de la petición.
+
+// Enrutador de peticiones:
 connect_server.use((req, res, next) => {
-  /*
-  console.log("connect_server.js: Preparando next()")
-  // Datos de validación del usuario activo
-  console.log("connect_server recibe: " + [
-    req.body.name_user,
-    req.body.full_user,
-    req.body.tele_user,
-    req.body.pass_user,
-    req.body.addr_user
-  ]);
-  // La variable user ahora será accesible desde el HTML
-  connect_server.locals.user = req.body;*/
-  req.body.user = hi_user.Initialization(user_logued);
-  user_logued = req.body.user;
-  console.log("Usuarios Actuales: ", hi_user.cant_users);
   next();
 });
 

@@ -45,23 +45,18 @@ router.post("/signup", isNotLoggedIn, (req, res) => {
 
 // Ruta para acceder con los datos ya ingresados en la página SignIn
 // Dado que esto es un Middleware, se ejecuta antes que el resto de rutas, y su declaración hace uso de la función 'next'.
-router.post("/signin", isNotLoggedIn, async (req, res) => {
+router.post("/signin", isNotLoggedIn, (req, res) => {
 	console.log("Route POST signin NotLog: Authentication");
-	console.log("Ruta de Logueo para entrar en una cuenta ya existente");
+	console.log("Ruta de página de Acceso/Log para entrar en una cuenta ya existente");
 
+	// Opciones de rutas.
 	const opc_routes = {
 		"succesfull": "/profile",
-		"failed": "/signup"
+		"failed": "/signin"
 	};
 
 	// Comparar en la Base de Datos
-	await Redirect_IsValidUser(req, opc_routes, res);
-	// No Obedece el Await y sigue de largo....
-	
-	// Este await si lo debe de obedecer si o si. (>_<)
-	await sleep(4000);
-	console.log("esperando");
-	
+	Redirect_IsValidUser(req, opc_routes, res);
 });
 
 // Ruta para validar el acceso del usuario.
