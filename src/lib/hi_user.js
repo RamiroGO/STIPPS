@@ -28,22 +28,22 @@ module.exports = {
 	// la variable 'actual_user':
 	// - Representa los parámetros que identifican al usuario autenticado.
 	// - 'actual_user' debería de provenir del request que recibe el servidor desde el usuario.
-	// - Si el servidor almacena 'actua_user' entonces será incapaz de mantener la sesión iniciada para mútliples usuarios, porque entrarían en conflicto.
+	// - Si el servidor almacena 'actual_user' entonces será incapaz de mantener la sesión iniciada para mútliples usuarios, porque entrarían en conflicto.
 	isAuthenticated: function () {
-		let is_exist = false;
+		let is_authenticated = false;
 
 		// Comprobación de usuario actual válido para autenticación.
 		if (actual_user.id !== 0){
 			// Buscar la existencia del usuario actual en el historial de usuarios logueados
-			for (let index = 0; index != history_users_log.length && !is_exist; index++) {
+			for (let index = 0; index != history_users_log.length && !is_authenticated; index++) {
 				const _user = history_users_log[index];
 				if (actual_user.nombre === _user.nombre &&
 					actual_user.contra === _user.contra &&
 					actual_user.id === _user.id) {
-					is_exist = true;
+					is_authenticated = true;
 				}
 			}
 		}
-		return is_exist;
+		return is_authenticated;
 	}
 }
