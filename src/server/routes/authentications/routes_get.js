@@ -22,7 +22,14 @@ router.get("/signin", isNotLoggedIn, (req, res) => {
 	res.render("acceso");
 });
 
-// Ruta para renderizar el profile cuando este funciona.
+// // Ruta para renderizar el profile cuando este funciona.
+// router.get("/profile", isNotLoggedIn, (req, res) => {
+// 	// Esta ruta get / profile se dañó, hay que mandarla a otra ruta get para que funcione.
+// 	console.log("Route GET profile NotLog");
+// 	// el 'res' debe mandar la orden de redirect al formulario HTML, para modificar el 'action' del formulario.
+// 	res.render("consulta");
+// });
+
 router.get("/profile", isLoggedIn, (req, res) => {
 	// Esta ruta get / profile se dañó, hay que mandarla a otra ruta get para que funcione.
 	console.log("Route GET profile Is_Log");

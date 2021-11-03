@@ -17,11 +17,11 @@ form_user.addEventListener("submit", async (event) => {
 		},
 		body: _string_dataUser
 	}).then(() => {
-		location.replace(
-			location.href
-				.substring(0, location.href.length - 6)
-				.concat('consulta'));
-	});
+			location.replace(
+				location.href
+					.substring(0, location.href.length - 6)
+					.concat('consulta'));
+		});
 
 	// Funciones Internas del evento
 	function FormData2Obj(form_data) {
