@@ -2,8 +2,9 @@
 const express = require("express");
 const database = require('../../database/connect_database_mysql.js');
 
-const query_server = express.Router();
-query_server.get("/all", (req, res) => {
+const router = express.Router();
+router.get("/all", (req, res) => {
+  console.log("Petición Get All from DataBase")
   const consulta_sql = "SELECT * FROM cursos";
   database.query(consulta_sql, (err, data) => {
     if (err) return err;
@@ -11,7 +12,7 @@ query_server.get("/all", (req, res) => {
   });
 });
 
-query_server.post('', (req, res) => {
+router.post('', (req, res) => {
   const values = Object.values(req.body);
   console.log(values);
 
@@ -35,7 +36,7 @@ query_server.post('', (req, res) => {
   });
 });
 
-query_server.get("/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   console.log(req.params.id);
   console.log("Enserio?")
   const values = req.params.id;
@@ -51,7 +52,7 @@ query_server.get("/:id", (req, res) => {
   });
 });
 
-query_server.put("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   const values = Object.values(req.body).concat(parseInt(req.params.id));
   console.log(values);
 
@@ -75,7 +76,7 @@ query_server.put("/:id", (req, res) => {
   });
 });
 
-query_server.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   console.log(req.params.id);
   const values = parseInt(req.params.id);
   const consulta_sql = "DELETE FROM cursos WHERE id = ?;";
@@ -91,4 +92,4 @@ query_server.delete("/:id", (req, res) => {
 });
 
 
-module.exports = query_server;
+module.exports = router;

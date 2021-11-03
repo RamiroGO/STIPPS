@@ -23,32 +23,11 @@ router.get("/signin", isNotLoggedIn, (req, res) => {
 });
 
 // Ruta para renderizar el profile cuando este funciona.
-router.get("/profile", isNotLoggedIn, (req, res) => {
-	// Esta ruta get / profile se dañó, hay que mandarla a otra ruta get para que funcione.
-	console.log("Route GET profile NotLog");
-	// el 'res' debe mandar la orden de redirect al formulario HTML, para modificar el 'action' del formulario.
-	res.render("consulta");
-});
-
 router.get("/profile", isLoggedIn, (req, res) => {
 	// Esta ruta get / profile se dañó, hay que mandarla a otra ruta get para que funcione.
 	console.log("Route GET profile Is_Log");
 	// el 'res' debe mandar la orden de redirect al formulario HTML, para modificar el 'action' del formulario.
 	res.render("consulta");
-});
-
-router.get("/consulta", isNotLoggedIn, (req, res) => {
-	console.log("Route GET consulta NotLog");
-	// Siendo que la ruta get/signin tiene su propio render, podemos hacer un redirect que cambie la ruta del GET en el origen.
-	// Las rutas de los GET de origen queda inhabilitado frente al redireccionamiento del enrutador.
-	res.redirect('/signin');
-});
-router.get("/consulta", isLoggedIn, (req, res) => {
-	console.log("Route GET consulta Is_Log");
-	// Si del lado del HTML hay un formulario con un GET esperando respuesta, este será capáz de ejecutar este response.render, el cual portará el documento HTML de la consulta.
-	// Cargamos el documento HTML presente en la carpeta de "views/html" previamente definidas en el servidor
-	// Se establece el archivo html para la ruta '/consulta'
-	res.render('consulta');
 });
 
 router.get('/logout', isLoggedIn, (req, res) => {

@@ -26,10 +26,10 @@ connect_server.use((req, res, next) => {
 });
 
 // Routes
-connect_server.use(require('./routes/routes'));
-connect_server.use(require('./routes/authentications/routes_get'));
+connect_server.use("/cursos", require('./routes/routes_database.js'));
 connect_server.use(require('./routes/authentications/routes_post'));
-connect_server.use("cursos", require('./routes/routes_database.js'));
+connect_server.use(require('./routes/authentications/routes_get'));
+connect_server.use(require('./routes/routes'));
 
 // Public
 connect_server.use(express.static(patch.join(__dirname, 'public')));

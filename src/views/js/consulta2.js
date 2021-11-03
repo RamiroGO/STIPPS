@@ -8,8 +8,11 @@ const nameDataBase = "CursosLocalStorage";
 document.addEventListener("DOMContentLoaded", (event) => {
   const idTable = "tblSalidaDato";
 
-  // Petición al Servidor para Revisar la Base de Datos del Usuario
-  let arrayJson = getCursos_MySQLServer();
+  // Revisar el localStorage
+  let stringLocalStorage = localStorage.getItem(nameDataBase);
+
+  // Convertir texto a JSON
+  let arrayJson = JSON.parse(stringLocalStorage) || [];
 
   // Recorrer el arreglo y visualizar
   for (id_reg = 0; id_reg != arrayJson.length; id_reg++) {
@@ -28,8 +31,8 @@ function addRow(event) {
   // Reciclación de id's xd
   id_reg = generateNewIdToDataBase(nameDataBase);
   console.log("id generado", id_reg);
-
-
+  
+  
   // Guardamos el Formulario en una variable
   const $form_user = document.getElementById("formConsulta"),
     cant_fila = document.getElementById("tblSalidaDato").rows.length,
@@ -98,7 +101,7 @@ function delAll(event, idTable, setNameDataBase) {
 
   // Capturar el elemento, que se asume es una tabla, para que pueda ser manipulado.
   const $tableBody = document.getElementById(idTable);
-  $tableBody.innerHTML = "";
+  $tableBody.innerHTML="";
 
   // Reiniciar los valores de las casillas del formulario
   const $form_user = document.getElementById("formConsulta");
@@ -204,14 +207,4 @@ function show_newRowTable(idTable, elementJson, sel_fila) {
 
   // Guardamos en el HTML el texto necesario correspondiente para la generación de los nuevos elementos que estarán dentro de la celda recien creada.
   $newRow.innerHTML = strBtnDel;
-}
-
-function getCursos_MySQLServer() {
-  fetch('http://localhost:3000/cursos/all', {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(value=>console.log(value));
-  //  JSON.parse(stringLocalStorage) || [] 
 }

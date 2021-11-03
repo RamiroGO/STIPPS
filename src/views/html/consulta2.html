@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html class="split" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="../css/consulta.css"
+    />
+    <title>STIPPS</title>
+  </head>
+
+  <body>
+    <h2><i>Módulo de Consulta</i></h2>
+    <form action="/src/js/query_server.js" id="formConsulta">
+      <label for="idArea">AREA:</label>
+      <select id="idArea" name="nameArea">
+        <option>--Seleccionar--</option>
+        <option>Ambiental</option>
+        <option>Derecho</option>
+        <option>Programación</option>
+        <option>Social</option>
+        <option>Tecnología</option>
+      </select>
+      <br />
+      <label for="idCurso"> CURSOS:</label>
+      <select id="idCurso" name="nameCurso">
+        <option>--Seleccionar--</option>
+        <option>Introduccion a la Informatica</option>
+        <option>Programacion Uno</option>
+        <option>Programacion Dos</option>
+        <option>Programacion tres</option>
+        <option>Tratamiento Residuos Solidos Organicos</option>
+        <option>Tratamiento de Aguas Residuales</option>
+        <option>Instalacion de Baño Seco y Tratamiento Excretas</option>
+        <option>Sistemas de Compostaje</option>
+        <option>Derecho Agrario</option>
+        <option>Derecho Comercial</option>
+        <option>Derecho Constitucional</option>
+        <option>Derecho Familia</option>
+        <option>Derecho Laboral</option>
+        <option>Derecho Penal</option>
+        <option>Asistencia A Familias</option>
+        <option>Principios de Mecanica Basica</option>
+        <option>Motores</option>
+        <option>Extraccion de Agua con Bomba de Ariete</option>
+        <option>Sistemas Fotovoltaicos y Soluciones con Energia Solar</option>
+      </select>
+
+      <br />
+      <input type="submit" onclick="addRow(event);" value="Agregar" />
+      <input type="submit" onclick="delAll(event, 'tblSalidaDato','CursosLocalStorage');" value="Borrar Todo" />
+    </form>
+    <br />
+    <table>
+      <thead>
+        <tr>
+          <td>Id</td>
+          <td>AREA</td>
+          <td>CURSO</td>
+          <td>DOCENTE</td>
+          <td>ACTIONS</td>
+        </tr>
+      </thead>
+      <tbody id="tblSalidaDato"></tbody>
+    </table>
+    <script type="text/javascript" src="../js/consulta.js"></script>
+  </body>
+</html>

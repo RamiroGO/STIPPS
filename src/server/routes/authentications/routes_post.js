@@ -59,11 +59,4 @@ router.post("/signin", isNotLoggedIn, (req, res) => {
 	Redirect_IsValidUser(req, opc_routes, res);
 });
 
-// Ruta para validar el acceso del usuario.
-router.post("/profile", isNotLoggedIn, (req, res, next) => {
-	console.log("Route POST profile NotLog: Authentication");
-
-	console.log("Hay que compartir galletas");
-});
-
 module.exports = router;
