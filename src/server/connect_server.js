@@ -26,7 +26,8 @@ connect_server.use((req, res, next) => {
 });
 
 // Routes
-connect_server.use("/cursos", require('./routes/routes_database.js'));
+connect_server.use("/cursos", require('./routes/routes_cursos_database.js'));
+connect_server.use("/profile", require('./routes/routes_profile_database.js'));
 connect_server.use(require('./routes/authentications/routes_post'));
 connect_server.use(require('./routes/authentications/routes_get'));
 connect_server.use(require('./routes/routes'));

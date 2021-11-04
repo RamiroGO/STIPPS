@@ -46,16 +46,16 @@
 #### * **Cursos**
 ##### - id
 ##### - nombre
-##### - area_id
+##### - id_area
 ##### - descripcion
 ### [Tablas con doble llave foranea]:
 #### * **Relacion**: Cursos_Usuarios
 ##### - id
-##### - curso_id
-##### - usuario_id
+##### - id_curso
+##### - id_usuario
 ##### - descripcion
 #### * **Relacion**: Cursos_Docentes
 ##### - id
-##### - curso_id
-##### - docente_id
+##### - id_curso
+##### - id_docente
 ##### - descripcion

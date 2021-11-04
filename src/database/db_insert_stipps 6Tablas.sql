@@ -28,7 +28,7 @@ VALUES
 ;
 -- [Tablas con llave foranea]:
 INSERT INTO `stipps`.`cursos`
-	(`nombre`,                                                  `descripcion`, `area_id`)
+	(`nombre`,                                                  `descripcion`, `id_area`)
 VALUES
     ("Tratamiento Residuos Solidos Organicos",                  "1",            1),
     ("Tratamiento de Aguas Residuales",                         "2",            1),
@@ -53,7 +53,7 @@ VALUES
 -- [Tablas con doble llave foranea]:
 -- Insertar Relaciones Cursos - Usuarios
 INSERT INTO `stipps`.`rel_cursos_usuarios`
-    (`curso_id`, `usuario_id`)
+    (`id_curso`, `id_usuario`)
 VALUES
     (1,       1),
     (1,       2),
@@ -67,7 +67,7 @@ VALUES
 ;
 -- Insertar Relaciones Cursos - Docentes
 INSERT INTO `stipps`.`rel_cursos_docentes`
-    (`curso_id`, `docente_id`)
+    (`id_curso`, `id_docente`)
 VALUES
     (1,       1),
     (5,       2),
