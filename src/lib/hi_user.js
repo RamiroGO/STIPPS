@@ -33,7 +33,7 @@ module.exports = {
 		let is_authenticated = false;
 
 		// Comprobación de usuario actual válido para autenticación.
-		if (actual_user.id !== 0){
+		if (actual_user.id !== 0) {
 			// Buscar la existencia del usuario actual en el historial de usuarios logueados
 			for (let index = 0; index != history_users_log.length && !is_authenticated; index++) {
 				const _user = history_users_log[index];
@@ -45,5 +45,8 @@ module.exports = {
 			}
 		}
 		return is_authenticated;
-	}
+	},
+	id_user: () => ({
+		id_user: actual_user.id
+	})
 }

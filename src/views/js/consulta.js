@@ -1,5 +1,6 @@
 // Variables Globales 
-let id_reg = 0;
+let $_id_reg = 0;
+let $_id_user = 0;
 
 // Funciones Utilitarias:
 // Cargar los elementos 'options' en los 'select' del HTML
@@ -32,7 +33,7 @@ function show_getOptionsSelect_MySQLServer(url_get, IdSelectElement) {
 }
 
 // Dibujar una fila en la tabla
-function show_rowTable(idTable, elementJson, sel_fila) {
+function show_rowTable(idTable, elementJson, sel_curso) {
   // Capturar el elemento, que se asume es una tabla, para que pueda ser manipulado.
   let $tableBody = document.getElementById(idTable);
 
@@ -45,7 +46,9 @@ function show_rowTable(idTable, elementJson, sel_fila) {
   // Creamos la primera celda de la fila creada.
   $newRow = $newRowTableBody.insertCell(0);
   // Escribimos el contenido de la celda creada.
-  $newRow.textContent = elementJson["id"];
+  // La primera celda representa la numeración de filas
+  $newRow.textContent = $_id_reg;
+  $_id_reg++;
 
   // Creamos la primera celda de la fila creada.
   $newRow = $newRowTableBody.insertCell(1);
@@ -66,199 +69,173 @@ function show_rowTable(idTable, elementJson, sel_fila) {
   $newRow = $newRowTableBody.insertCell(4);
 
   // Generamos los textos correspondientes a la creación de nuevas etiquetas html de tipo botones de envio de formulario (submit)
-  const strBtnDel = `<input type='submit' key=${elementJson["id"]} onclick='delData(event,${sel_fila})' value ='Borrar' />`;
+  const strBtnDel = `<input type='submit' onclick='delData(event,${elementJson["id_curso"]})' value ='Borrar' />`;
 
   // Guardamos en el HTML el texto necesario correspondiente para la generación de los nuevos elementos que estarán dentro de la celda recien creada.
   $newRow.innerHTML = strBtnDel;
 }
 
-
-// Funciones de Eventos:
-// EVENTO: Después de cargar la página.
-document.addEventListener("DOMContentLoaded", (event) => {
-  // Evitar recargas indeseadas en la página
-  event.preventDefault();
-
-  const idTable = "tblSalidaDato";
-
-  // Petición al Servidor para Revisar la Base de Datos del Usuario
-  show_getOptionsSelect_MySQLServer('http://localhost:3000/cursos/areas', "idArea");
-
-  // Función para hacer petición de los cursos a los que se encuentra inscrito el usuario.
-  fetch('http://localhost:3000/profile/1/cursos')
+// Petición al Servidor para Consultar en la Base de Datos la lista de cursos a los que se encuentra registrado el usuario.
+function show_getCursosUsuario(idTable) {
+  const url_get = "http://localhost:3000/profile/" + $_id_user + "/cursos";
+  fetch(url_get)
     .then(response_ => response_.json())
     .then((arrayJson) => {
       // Recorrer el arreglo y visualizar
-      for (id_reg = 0; id_reg != arrayJson.length; id_reg++) {
-        show_rowTable(idTable, arrayJson[id_reg], id_reg);
-      }
+      $_id_reg = 1;
+      arrayJson.forEach(elementJson => {
+        show_rowTable(idTable, elementJson, elementJson.id);
+      });
     });
+}
+
+// Funciones de Eventos:
+// EVENTO: Después de cargar la página.
+document.addEventListener("DOMContentLoaded", () => {
+  const idTable = "tblSalidaDato";
+
+  // Petición al Servidor para Revisar la Base de Datos del Usuario
+  show_getOptionsSelect_MySQLServer('http://localhost:3000/cursos/areas', "idSelectArea");
+
+  // Función para traer las variables del Loggin
+  fetch(`http://localhost:3000/profile/id`, {
+    method: 'GET'
+  })
+    .then(response => response.json())
+    .then(value => {
+      $_id_user = value.id_user
+    })
+    // Función para hacer petición de los cursos a los que se encuentra inscrito el usuario.
+    .then(() => { show_getCursosUsuario(idTable) });
 });
 
 // EVENTO: Cuando se selecciona un área:
 // - Se cargan los cursos correspondientes a esa área.
 // - Se visualiza el elemento HTML para la selección de cursos.
 // - Se elimina la opción de --Seleccionar-- de la lista de áreas.
-document.getElementById("idArea").addEventListener('change', (event) => {
-  const $areaSelect = document.getElementById("idArea").options[0];
+document.getElementById("idSelectArea").addEventListener('change', (event) => {
 
   // Eliminar el elemento de opción nula por defecto.
+  const $areaSelect = document.getElementById("idSelectArea").options[0];
   if ($areaSelect.text === '--Seleccionar--')
     $areaSelect.remove(0);
 
   // Visualizar lista de selección de opciones de cursos
-  document.getElementById("idCurso").hidden = false;
-  document.getElementById("labelSelectCurso").hidden = false;
-  
+  document.getElementById("id_LabelCurso").hidden = false;
+  document.getElementById("idSelectCurso").hidden = false;
+
   // S define la ruta URL con el área seleccionada.
   const url_getCursos = 'http://localhost:3000/cursos/' + event.target.value;
   // Se desarrolla una petición GET al servidor con la ruta para obtener los cursos correspondientes al Área seleccionada. 
-  show_getOptionsSelect_MySQLServer(url_getCursos, 'idCurso');
+  show_getOptionsSelect_MySQLServer(url_getCursos, 'idSelectCurso');
+});
+
+
+// EVENTO: Cuando se selecciona un Curso:
+// - Se visualiza el elemento HTML para la inserción del curso.
+// - Se elimina la opción de --Seleccionar-- de la lista de áreas.
+document.getElementById("idSelectCurso").addEventListener('change', () => {
+  document.getElementById("idInsertCurso").hidden = false;
 });
 
 // Evento: Activamos los eventos de presionar botones.
-function addRow(event) {
+async function addRow(event) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
 
   // Se autoincrementa antes de asignarse, para que comience en 1 la id del registro en la database.
-  // id_reg++;
-
-  // Reciclación de id's xd
-  id_reg = generateNewIdToDataBase(nameDataBase);
-  console.log("id generado", id_reg);
+  $_id_reg++;
 
   // Guardamos el Formulario en una variable
   const $form_user = document.getElementById("formConsulta"),
     cant_fila = document.getElementById("tblSalidaDato").rows.length,
-    form_data = new FormData($form_user), // Almacenar la información del formulario en una variable.
-    json_data = {
-      // Convertir la información del formulario en un JSon
-      // Añadimos el parámetro 'id' a la información json_data de cada fila, según la cantidad de filas de la tabla en el momento del evento del botón "agregar".
-      id: id_reg,
-      areaFormUser: form_data.get("nameArea"),
-      cursoFormUser: form_data.get("nameCurso"),
-      docente: "Irma",
-    };
+    form_data = new FormData($form_user); // Almacenar la información del formulario en un Objeto.
 
-  // Guarda la información del formulario en el LocalStorage
-  setDataBase(nameDataBase, json_data);
+  // Añadimos el parámetro 'id' a la información json_data de cada fila, según la cantidad de filas de la tabla en el momento del evento del botón "agregar".
+  let json_data = { id_user: $_id_user };
+
+  // Convertir la información del formulario en un JSon
+  json_data.cursoFormUser = form_data.get("nameCurso");
+
+  // Convertir el JSON en una cadena String antes de enviar
+  const string_data = JSON.stringify(json_data);
+
+  // Función para hacer petición de los cursos a los que se encuentra inscrito el usuario.
+  await fetch(`http://localhost:3000/profile/cursos`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: string_data
+  })
+    // Convertir la respuesta del servidor en json
+    .then(data => data.json())
+    .then((response) => {
+      // Buscar el Id de la Base de Datos.
+      json_data.id = response.id;
+      json_data.areaFormUser = form_data.get("nameArea");
+      json_data.docente = response.docente;
+    });
 
   // Inserta la información en la tabla; Para no recargar la página.
-  show_rowTable("tblSalidaDato", json_data, cant_fila);
+  show_rowTable("tblSalidaDato", json_data, json_data.id);
 
   // Reiniciar los valores de las casillas del formulario
   $form_user.reset();
   console.log("Curso Añadido: ", json_data);
-
-  // Función para recibir el nuevo id de la base de datos.
-  function generateNewIdToDataBase(nameDataBase) {
-    // Revisar el localStorage
-    let stringLocalStorage = localStorage.getItem(nameDataBase);
-
-    // Convertir texto a JSON
-    let arrayJson = JSON.parse(stringLocalStorage) || [];
-
-    let isWorks;
-    let correId = 1;
-    let correJson;
-
-    do {
-      isWorks = true; // nuevo intento
-      for (
-        correJson = 0;
-        correJson != arrayJson.length && isWorks;
-        correJson++
-      ) {
-        const id_Local = arrayJson[correJson]["id"];
-        let is_same = id_Local == correId;
-        if (is_same) {
-          isWorks = false;
-        }
-      }
-
-      // Si no funcionó, siga con el siguiente id
-      if (!isWorks) {
-        correId++;
-      }
-    } while (!isWorks);
-
-    return correId;
-  }
 }
 
-function delAll(event, idTable, setNameDataBase) {
+function delAll(event, idTable) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
 
-  // Buscar el Database
-  localStorage.setItem(setNameDataBase, "[]");
+  // Petición para Eliminar los cursos de este usuario.
+  fetch('http://localhost:3000/profile/all', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: $_id_user,
+      cantidad: JSON.stringify(document.getElementById("tblSalidaDato").rows.length)
+    })
+  }).catch((res) => console.log(res));
 
   // Capturar el elemento, que se asume es una tabla, para que pueda ser manipulado.
   const $tableBody = document.getElementById(idTable);
   $tableBody.innerHTML = "";
 
   // Reiniciar los valores de las casillas del formulario
-  const $form_user = document.getElementById("formConsulta");
-  $form_user.reset();
+  document.getElementById("formConsulta").reset();
   console.log("Todo Borrado");
 }
 
 // Función para eliminar una fila.
-function delData(event, sel_row) {
+function delData(event, id_curso) {
+  const idTable = "tblSalidaDato";
+
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
 
-  console.log("Id para Eliminar: " + sel_row);
+  console.log("Id para Eliminar: " + id_curso);
 
-  /// Eliminar elemento de la Base de Datos
-  // Revisar el localStorage
-  let stringLocalStorage = localStorage.getItem(nameDataBase);
-
-  // Convertir texto a JSON
-  let arrayJson = JSON.parse(stringLocalStorage) || [];
-
-  const idTable = "tblSalidaDato",
-    keyName = nameDataBase;
+  // Petición para Eliminar el curso seleccionado de este usuario.
+  fetch('http://localhost:3000/profile/del_curso', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id_usuario: $_id_user,
+      id_curso: id_curso
+    })
+  }).catch((res) => console.log(res));
 
   // se reinicia la tabla
   let $tabla = document.getElementById(idTable);
 
-  // Definir objeto JSON que acumulará las variables a guardar en la base de datos
-  let JSONData = [];
   $tabla.innerHTML = "";
 
-  /// Se recorre el arreglo de datos, pero se ignora el elemento que se quiere eliminar
-  // Recorrer el arreglo y visualizar
-  id_reg = 0;
-  for (let countRowDraw = 0; id_reg != arrayJson.length; id_reg++)
-    if (id_reg != sel_row) {
-      JSONData.push(arrayJson[id_reg]);
-      show_rowTable(idTable, arrayJson[id_reg], countRowDraw);
-      countRowDraw++; // Solo cuenta filas dibujadas; Inicializa en 0.
-    } else console.log("Borra el elemento: ", id_reg);
-
-  // convertir JSON a texto
-  let stringArrayJson = JSON.stringify(JSONData);
-
-  // Guardar en el LocalStorage
-  localStorage.setItem(keyName, stringArrayJson);
-}
-
-// Guarda la información
-function setDataBase(keyName, JSONData) {
-  // Revisar el localStorage
-  let stringLocalStorage = localStorage.getItem(keyName);
-
-  // Convertir texto a JSON
-  let arrayJson = JSON.parse(stringLocalStorage) || [];
-
-  // Insertar JSONData para el arreglo previo al localStorage
-  arrayJson.push(JSONData);
-
-  // convertir JSON a texto
-  let stringArrayJson = JSON.stringify(arrayJson);
-
-  // Guardar en el LocalStorage
-  localStorage.setItem(keyName, stringArrayJson);
+  // Función para hacer petición de los cursos a los que se encuentra inscrito el usuario.
+  show_getCursosUsuario(idTable);
 }

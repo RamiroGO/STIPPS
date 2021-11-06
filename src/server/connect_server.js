@@ -2,6 +2,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const patch = require('path');
+const { id_user } = require('../lib/hi_user.js');
 
 // initializations
 const connect_server = express();
@@ -22,6 +23,8 @@ connect_server.use(express.json());
 
 // Enrutador de peticiones:
 connect_server.use((req, res, next) => {
+  // PENDIENTE: Intentar llevar las variables del usuario al generador de la vista del HTML
+  connect_server.locals.id_user = id_user;
   next();
 });
 
