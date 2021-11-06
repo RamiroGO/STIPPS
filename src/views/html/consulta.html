@@ -17,16 +17,17 @@
     <form id="formConsulta">
       <label for="idSelectArea">AREA:</label>
       <select id="idSelectArea" name="nameArea">
-        <option id=0>--Seleccionar--</option>
-      </select>
-      <br />
-      <label id="id_LabelCurso" for="idCurso" hidden=true>CURSOS:
-      </label>
-      <select id="idSelectCurso" hidden=true name="nameCurso">
         <option>--Seleccionar--</option>
       </select>
       <br />
-      <input id="idInsertCurso" type="submit" onclick="addRow(event);" value="Agregar" hidden=true />
+      <label id="id_LabelCurso" for="idSelectCurso" hidden=true>CURSOS:
+        <select id="idSelectCurso" name="nameCurso">
+          <option>--Seleccionar--</option>
+        </select>
+      </label>
+      <br />
+      <input id="idInsertCurso" type="submit" onclick="addRow(event);"
+        value="Agregar" hidden=true />
       <input type="submit" onclick="delAll(event,'tblSalidaDato');"
         value="Borrar Todo" />
     </form>

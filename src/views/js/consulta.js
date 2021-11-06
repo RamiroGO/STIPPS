@@ -33,7 +33,7 @@ function show_getOptionsSelect_MySQLServer(url_get, IdSelectElement) {
 }
 
 // Dibujar una fila en la tabla
-function show_rowTable(idTable, elementJson, sel_curso) {
+function show_rowTable(idTable, elementJson) {
   // Capturar el elemento, que se asume es una tabla, para que pueda ser manipulado.
   let $tableBody = document.getElementById(idTable);
 
@@ -84,7 +84,7 @@ function show_getCursosUsuario(idTable) {
       // Recorrer el arreglo y visualizar
       $_id_reg = 1;
       arrayJson.forEach(elementJson => {
-        show_rowTable(idTable, elementJson, elementJson.id);
+        show_rowTable(idTable, elementJson);
       });
     });
 }
@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // - Se visualiza el elemento HTML para la selección de cursos.
 // - Se elimina la opción de --Seleccionar-- de la lista de áreas.
 document.getElementById("idSelectArea").addEventListener('change', (event) => {
-
   // Eliminar el elemento de opción nula por defecto.
   const $areaSelect = document.getElementById("idSelectArea").options[0];
   if ($areaSelect.text === '--Seleccionar--')
@@ -122,7 +121,6 @@ document.getElementById("idSelectArea").addEventListener('change', (event) => {
 
   // Visualizar lista de selección de opciones de cursos
   document.getElementById("id_LabelCurso").hidden = false;
-  document.getElementById("idSelectCurso").hidden = false;
 
   // S define la ruta URL con el área seleccionada.
   const url_getCursos = 'http://localhost:3000/cursos/' + event.target.value;
@@ -142,9 +140,6 @@ document.getElementById("idSelectCurso").addEventListener('change', () => {
 async function addRow(event) {
   // Evitar el reinicio de la página dado al activar eventos. Al presionar botón.
   event.preventDefault();
-
-  // Se autoincrementa antes de asignarse, para que comience en 1 la id del registro en la database.
-  $_id_reg++;
 
   // Guardamos el Formulario en una variable
   const $form_user = document.getElementById("formConsulta"),
@@ -171,14 +166,29 @@ async function addRow(event) {
     // Convertir la respuesta del servidor en json
     .then(data => data.json())
     .then((response) => {
-      // Buscar el Id de la Base de Datos.
+      // Llenar el Objeto json_data para para tener los elementos pedidos
+      // para insertar en la tabla a partir de la Id en la Base de Datos.
       json_data.id = response.id;
       json_data.areaFormUser = form_data.get("nameArea");
       json_data.docente = response.docente;
+
+      
+      // Reiniciar elementos para ingresar cursos y ocultarlos
+      //  :: También pudo haber funcionado simplemente el
+      //  ocultar esta opción del HTML dándole un id y un hidden
+      let $area_select = document.getElementById("idSelectArea");
+      // Generar un nuevo elemento 'option' para el 'select'
+      let $newOption = document.createElement('option');
+      // Darle un texto al elemento 'option' correspondiente con la información recibida de la petción.
+      $newOption.text = "--Seleccionar--";
+      // Añadir el elemento 'option' al elemento 'select'
+      $area_select.prepend($newOption);
+      // Ocultar la lista de selección de opciones de cursos
+      document.getElementById("id_LabelCurso").hidden = true;
     });
 
   // Inserta la información en la tabla; Para no recargar la página.
-  show_rowTable("tblSalidaDato", json_data, json_data.id);
+  show_rowTable("tblSalidaDato", json_data);
 
   // Reiniciar los valores de las casillas del formulario
   $form_user.reset();
