@@ -183,8 +183,11 @@ async function addRow(event) {
       $newOption.text = "--Seleccionar--";
       // Añadir el elemento 'option' al elemento 'select'
       $area_select.prepend($newOption);
-      // Ocultar la lista de selección de opciones de cursos
+      $area_select.focus({ preventScroll: false });
+      
+      // Ocultar la lista de selección de opciones de cursos y el Botón de Agregar Curso
       document.getElementById("id_LabelCurso").hidden = true;
+      document.getElementById("idInsertCurso").hidden = true;
     });
 
   // Inserta la información en la tabla; Para no recargar la página.
